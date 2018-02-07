@@ -14,7 +14,7 @@ MEAL_GET = {
         '200': {
             'description': '급식 정보 있음',
             'examples': {
-                'application/json': {
+                '': {
                     'breakfast': ['피자', '먹고싶다', '토마토쏘-쓰'],
                     'lunch': ['점심은', '파스타'],
                     'dinner': ['저녁은', '밥이고뭐고', '집가자']

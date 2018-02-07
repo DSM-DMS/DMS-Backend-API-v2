@@ -67,6 +67,9 @@ class AuthCheck(BaseResource):
     @swag_from(AUTH_CHECK_GET)
     @student_only
     def get(self):
+        """
+        로그인 상태(Access Token 만료 여부) 체크
+        """
         return Response('', 200)
 
 

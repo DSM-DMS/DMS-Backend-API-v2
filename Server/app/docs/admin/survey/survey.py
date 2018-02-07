@@ -14,22 +14,22 @@ SURVEY_MANAGING_GET = {
         '200': {
             'description': '설문지 리스트 불러오기 성공',
             'examples': {
-                'application/json': [
+                '': [
                     {
                         'id': 's3qldmc13opeflds',
                         'description': '치킨 어때?',
-                        'creation_time': '2017-12-26',
+                        'creationTime': '2017-12-26',
                         'title': '내일 저녁 치킨먹기 찬반설문',
-                        'start_date': '2017-10-24',
-                        'end_date': '2017-10-25'
+                        'startDate': '2017-10-24',
+                        'endDate': '2017-10-25'
                     },
                     {
                         'id': '1fnfdj3391idkflds',
                         'description': '졸리다',
-                        'creation_time': '2017-12-26',
+                        'creationTime': '2017-12-26',
                         'title': '등교 후 12시간 자습 찬반설문',
-                        'start_date': '2017-10-24',
-                        'end_date': '2017-10-30'
+                        'startDate': '2017-10-24',
+                        'endDate': '2017-10-30'
                     }
                 ]
             }
@@ -66,14 +66,14 @@ SURVEY_MANAGING_POST = {
             'required': True
         },
         {
-            'name': 'start_date',
+            'name': 'startDate',
             'description': '시작 날짜(YYYY-MM-DD)',
             'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'end_date',
+            'name': 'endDate',
             'description': '종료 날짜(YYYY-MM-DD)',
             'in': 'json',
             'type': 'str',
@@ -91,7 +91,7 @@ SURVEY_MANAGING_POST = {
         '201': {
             'description': '설문지 등록 성공. 등록된 설문지의 ID 응답',
             'examples': {
-                'application/json': {
+                '': {
                     'id': '13211265df16ads'
                 }
             }
@@ -114,7 +114,7 @@ SURVEY_MANAGING_DELETE = {
             'required': True
         },
         {
-            'name': 'survey_id',
+            'name': 'surveyId',
             'description': '설문지 ID',
             'in': 'query',
             'type': 'str',
@@ -146,7 +146,7 @@ QUESTION_MANAGING_GET = {
             'required': True
         },
         {
-            'name': 'survey_id',
+            'name': 'surveyId',
             'description': '설문지 ID',
             'in': 'query',
             'type': 'str',
@@ -157,17 +157,17 @@ QUESTION_MANAGING_GET = {
         '200': {
             'description': '질문 리스트 불러오기 성공',
             'examples': {
-                'application/json': [
+                '': [
                     {
                         'id': '13211265df16ads',
                         'title': '저녁에 치킨을 먹고 싶습니까?',
-                        'is_objective': True,
-                        'choice_paper': ['예', '아니오']
+                        'isObjective': True,
+                        'choicePaper': ['예', '아니오']
                     },
                     {
                         'id': '11265cd65432r9',
                         'title': '어디 치킨이 좋습니까?',
-                        'is_objective': False
+                        'isObjective': False
                     }
                 ]
             }
@@ -193,7 +193,7 @@ QUESTION_MANAGING_POST = {
             'required': True
         },
         {
-            'name': 'survey_id',
+            'name': 'surveyId',
             'description': '질문을 추가할 설문지 ID',
             'in': 'json',
             'type': 'str',
@@ -207,14 +207,14 @@ QUESTION_MANAGING_POST = {
             'required': True
         },
         {
-            'name': 'is_objective',
+            'name': 'isObjective',
             'description': '객관식 여부',
             'in': 'json',
             'type': 'bool',
             'required': True
         },
         {
-            'name': 'choice_paper',
+            'name': 'choicePaper',
             'description': '객관식 선택지',
             'in': 'json',
             'type': 'list',
@@ -225,7 +225,7 @@ QUESTION_MANAGING_POST = {
         '201': {
             'description': '질문 추가 성공. 업로드된 질문의 ID 응답',
             'examples': {
-                'application/json': [
+                '': [
                     '13211265df16ads',
                     '13211265df16abc',
                     '13211265df16add',

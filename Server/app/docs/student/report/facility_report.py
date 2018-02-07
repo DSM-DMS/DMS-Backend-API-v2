@@ -35,7 +35,7 @@ FACILITY_REPORT_POST = {
         '201': {
             'description': '시설고장 신고 성공. 업로드된 시설고장 신고의 ID 응답',
             'examples': {
-                'application/json': {
+                '': {
                     'id': '13211265df16ads'
                 }
             }

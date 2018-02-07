@@ -12,7 +12,10 @@ GOINGOUT_DOWNLOAD_GET = {
     ],
     'responses': {
         '200': {
-            'description': '외출신청 정보 추출 성공. 엑셀 파일 응답'
+            'description': '외출신청 정보 추출 성공. 엑셀 파일 응답',
+            'examples': {
+                '': 'PKx03x04x14x00x00x00..'
+            }
         },
         '403': {
             'description': '권한 없음'

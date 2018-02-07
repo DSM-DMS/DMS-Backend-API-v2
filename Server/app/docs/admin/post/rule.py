@@ -28,7 +28,7 @@ RULE_MANAGING_POST = {
         '201': {
             'description': '기숙사규정 업로드 성공. 업로드된 기숙사규정의 ID 응답',
             'examples': {
-                'application/json': {
+                '': {
                     'id': '13211265df16ads'
                 }
             }

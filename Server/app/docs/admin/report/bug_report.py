@@ -14,7 +14,7 @@ BUG_REPORT_DOWNLOAD_GET = {
         '200': {
             'description': '버그신고 리스트 조회 성공',
             'examples': {
-                'application/json': [
+                '': [
                     {
                         'author': '이병찬',
                         'title': 'DMS 앱이 왜 안나와요',

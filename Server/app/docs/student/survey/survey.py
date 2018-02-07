@@ -14,7 +14,7 @@ SURVEY_GET = {
         '200': {
             'description': '설문지 리스트 불러오기 성공',
             'examples': {
-                'application/json': [
+                '': [
                     {
                         'id': 's3qldmc13opeflds',
                         'creation_time': '2017-12-26',
@@ -63,7 +63,7 @@ QUESTION_GET = {
         '200': {
             'description': '질문 리스트 불러오기 성공. 답변했다면 답변도 함께 반환됩니다.',
             'examples': {
-                'application/json': [
+                '': [
                     {
                         'id': '13211265df16ads',
                         'title': '저녁에 치킨을 먹고 싶습니까?',

@@ -21,7 +21,9 @@ ACCOUNT_CONTROL_POST = {
         '201': {
             'description': '계정 삭제, UUID 생성 성공',
             'examples': {
-                'uuid': '022d'
+                '': {
+                    'uuid': '022d'
+                }
             }
         },
         '204': {
@@ -56,7 +58,7 @@ ACCOUNT_CONTROL_DELETE = {
         }
     ],
     'responses': {
-        '201': {
+        '200': {
             'description': '계정 삭제, UUID 생성 성공'
         },
         '204': {

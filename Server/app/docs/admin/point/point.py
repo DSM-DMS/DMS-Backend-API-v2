@@ -21,16 +21,18 @@ POINT_MANAGING_GET = {
         '200': {
             'description': '내역 조회 성공',
             'examples': {
-                'application/json': [
+                '': [
                     {
                         'time': '2017-12-17',
                         'reason': '치킨 먹음',
-                        'point': -3
+                        'point': -3,
+                        'id': '13211265df16ads'
                     },
                     {
                         'time': '2017-12-19',
                         'reason': '치킨 맛있음',
-                        'point': 2
+                        'point': 2,
+                        'id': '13211265df16ads'
                     }
                 ]
             }
@@ -56,14 +58,14 @@ POINT_MANAGING_POST = {
             'required': True
         },
         {
-            'name': 'id',
+            'name': 'studentId',
             'description': '상벌점 데이터 등록 대상 학생 ID',
             'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'rule_id',
+            'name': 'ruleId',
             'description': '상벌점을 부여하기 위한 규칙 ID',
             'in': 'json',
             'type': 'str',
@@ -105,14 +107,14 @@ POINT_MANAGING_DELETE = {
             'required': True
         },
         {
-            'name': 'student_id',
+            'name': 'studentId',
             'description': '상벌점 데이터 삭제 대상 학생 ID',
             'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'point_id',
+            'name': 'pointId',
             'description': '삭제할 상벌점 데이터 ID',
             'in': 'json',
             'type': 'str',

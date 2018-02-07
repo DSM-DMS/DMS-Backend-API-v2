@@ -14,7 +14,7 @@ GOINGOUT_GET = {
         '200': {
             'description': '외출신청 정보 조회 성공',
             'examples': {
-                'application/json': {
+                '': {
                     'sat': True,
                     'sun': False
                 }

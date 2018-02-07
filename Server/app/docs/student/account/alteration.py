@@ -10,14 +10,14 @@ CHANGE_PW_POST = {
             'required': True
         },
         {
-            'name': 'current_pw',
+            'name': 'currentPw',
             'description': '현재 비밀번호',
             'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'new_pw',
+            'name': 'newPw',
             'description': '바꿀 비밀번호',
             'in': 'json',
             'type': 'str',
@@ -46,7 +46,7 @@ CHANGE_NUMBER_POST = {
             'required': True
         },
         {
-            'name': 'new_number',
+            'name': 'newNumber',
             'description': '바꿀 학번',
             'in': 'json',
             'type': 'int',

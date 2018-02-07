@@ -28,7 +28,7 @@ NOTICE_MANAGING_POST = {
         '201': {
             'description': '공지사항 업로드 성공. 업로드된 공지사항의 ID 응답',
             'examples': {
-                'application/json': {
+                '': {
                     'id': '13211265df16ads'
                 }
             }
