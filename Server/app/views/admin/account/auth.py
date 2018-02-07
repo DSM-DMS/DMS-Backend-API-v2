@@ -10,7 +10,7 @@ from flasgger import swag_from
 
 from app.docs.admin.account.auth import *
 from app.models.account import AdminModel, RefreshTokenModel
-from app.views import BaseResource
+from app.views import BaseResource, json_required
 
 api = Api(Blueprint('admin-auth-api', __name__))
 api.prefix = '/admin'
@@ -19,14 +19,15 @@ api.prefix = '/admin'
 @api.resource('/auth')
 class Auth(BaseResource):
     @swag_from(AUTH_POST)
+    @json_required
     def post(self):
         """
         관리자 로그인
         """
-        id = request.form['id']
-        pw = request.form['pw']
+        id = request.json['id']
+        pw = request.json['pw']
 
-        pw = hexlify(pbkdf2_hmac(
+        hashed_pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=pw.encode(),
             salt=current_app.secret_key.encode(),
@@ -34,7 +35,7 @@ class Auth(BaseResource):
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        admin = AdminModel.objects(id=id, pw=pw).first()
+        admin = AdminModel.objects(id=id, pw=hashed_pw).first()
 
         if not admin:
             abort(401)
@@ -45,14 +46,14 @@ class Auth(BaseResource):
         RefreshTokenModel(
             token=refresh_token,
             token_owner=admin,
-            pw_snapshot=pw
+            pw_snapshot=hashed_pw
         ).save()
         # Generate new refresh token made up of uuid4
 
-        return self.unicode_safe_json_response({
+        return {
             'access_token': create_access_token(id),
             'refresh_token': create_refresh_token(str(refresh_token))
-        }, 200)
+        }, 200
 
 
 @api.resource('/refresh')
@@ -70,6 +71,6 @@ class Refresh(BaseResource):
         #     # Returns status code 205 : Reset Content
         #     return Response('', 205)
 
-        return self.unicode_safe_json_response({
+        return {
             'access_token': create_access_token(token.token_owner.id)
-        }, 200)
+        }, 200

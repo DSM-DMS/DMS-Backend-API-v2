@@ -54,9 +54,9 @@ REFRESH_POST = {
                 }
             }
         },
-        '205': {
-            'description': '로그인 실패(다른 디바이스에서 비밀번호가 변경됐거나, Refresh Token이 만료됨). '
-                           '재로그인을 통한 새로운 Access Token과 Refresh Token 발급 필요'
-        }
+        # '205': {
+        #     'description': '로그인 실패(다른 디바이스에서 비밀번호가 변경됐거나, Refresh Token이 만료됨). '
+        #                    '재로그인을 통한 새로운 Access Token과 Refresh Token 발급 필요'
+        # }
     }
 }
