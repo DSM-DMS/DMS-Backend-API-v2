@@ -19,7 +19,7 @@ class NoticeList(BaseResource):
         """
         response = [{
             'id': str(notice.id),
-            'write_time': str(notice.write_time)[:10],
+            'writeTime': str(notice.write_time)[:10],
             'author': notice.author,
             'title': notice.title,
             'pinned': notice.pinned
@@ -44,7 +44,7 @@ class NoticeItem(BaseResource):
             return Response('', 204)
 
         response = {
-            'write_time': str(notice.write_time)[:10],
+            'writeTime': str(notice.write_time)[:10],
             'author': notice.author,
             'title': notice.title,
             'content': notice.content,

@@ -22,7 +22,7 @@ class ChangePW(BaseResource):
         """
         비밀번호 변경
         """
-        current_pw = request.json['current_pw']
+        current_pw = request.json['currentPw']
         current_pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=current_pw.encode(),
@@ -39,7 +39,7 @@ class ChangePW(BaseResource):
 
         # --- Change password
 
-        new_pw = request.json['new_pw']
+        new_pw = request.json['newPw']
         new_pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=new_pw.encode(),
@@ -62,7 +62,7 @@ class ChangeNumber(BaseResource):
         """
         학번 변경
         """
-        new_number = request.json['new_number']
+        new_number = request.json['newNumber']
 
         student = StudentModel.objects(id=get_jwt_identity()).first()
         student.update(number=new_number)

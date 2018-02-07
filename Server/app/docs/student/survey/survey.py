@@ -17,19 +17,19 @@ SURVEY_GET = {
                 'application/json': [
                     {
                         'id': 's3qldmc13opeflds',
-                        'creation_time': '2017-12-26',
+                        'creationTime': '2017-12-26',
                         'title': '내일 저녁 치킨먹기 찬반설문',
                         'description': '설명!',
-                        'start_date': '2017-10-24',
-                        'end_date': '2017-10-25'
+                        'startDate': '2017-10-24',
+                        'endDate': '2017-10-25'
                     },
                     {
                         'id': '1fnfdj3391idkflds',
-                        'creation_time': '2017-12-26',
+                        'creationTime': '2017-12-26',
                         'title': '등교 후 12시간 자습 찬반설문',
                         'description': '설명!',
-                        'start_date': '2017-10-24',
-                        'end_date': '2017-10-30'
+                        'startDate': '2017-10-24',
+                        'endDate': '2017-10-30'
                     }
                 ]
             }
@@ -52,7 +52,7 @@ QUESTION_GET = {
             'required': True
         },
         {
-            'name': 'survey_id',
+            'name': 'surveyId',
             'description': '설문지 ID',
             'in': 'query',
             'type': 'str',
@@ -67,14 +67,14 @@ QUESTION_GET = {
                     {
                         'id': '13211265df16ads',
                         'title': '저녁에 치킨을 먹고 싶습니까?',
-                        'is_objective': True,
-                        'choice_paper': ['예', '아니오'],
+                        'isObjective': True,
+                        'choicePaper': ['예', '아니오'],
                         'answer': '예'
                     },
                     {
                         'id': '11265cd65432r9',
                         'title': '어디 치킨이 좋습니까?',
-                        'is_objective': False,
+                        'isObjective': False,
                         'answer': None
                     }
                 ]

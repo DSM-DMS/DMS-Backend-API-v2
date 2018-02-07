@@ -19,7 +19,7 @@ class FAQList(BaseResource):
         """
         response = [{
             'id': str(faq.id),
-            'write_time': str(faq.write_time)[:10],
+            'writeTime': str(faq.write_time)[:10],
             'author': faq.author,
             'title': faq.title,
             'pinned': faq.pinned
@@ -44,7 +44,7 @@ class FAQItem(BaseResource):
             return Response('', 204)
 
         response = {
-            'write_time': str(faq.write_time)[:10],
+            'writeTime': str(faq.write_time)[:10],
             'author': faq.author,
             'title': faq.title,
             'content': faq.content,

@@ -35,7 +35,7 @@ class Extension11EachStudent(BaseResource):
         if not student:
             return Response('', 204)
 
-        class_ = request.json['class_num']
+        class_ = request.json['classNum']
         seat = request.json['seat']
 
         student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat))
@@ -83,7 +83,7 @@ class Extension12EachStudent(BaseResource):
         if not student:
             return Response('', 204)
 
-        class_ = request.json['class_num']
+        class_ = request.json['classNum']
         seat = request.json['seat']
 
         student.update(extension_apply_12=ExtensionApplyModel(class_=class_, seat=seat))

@@ -15,8 +15,8 @@ EXTENSION_GET = {
             'description': '연장신청 정보 조회 성공',
             'examples': {
                 'application/json': {
-                    'class_num': 1,
-                    'seat_num': 16
+                    'classNum': 1,
+                    'seatNum': 16
                 }
             }
         },
@@ -104,7 +104,7 @@ EXTENSION_MAP_GET = {
     'description': '연장신청 지도 조회',
     'parameters': [
         {
-            'name': 'class_num',
+            'name': 'classNum',
             'description': '지도를 조회할 학습실 번호',
             'in': 'formData',
             'type': 'int',

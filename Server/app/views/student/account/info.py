@@ -24,23 +24,23 @@ class MyPage(BaseResource):
             'name': student.name,
             'number': student.number,
 
-            'extension_11': {
-                'class_num': student.extension_apply_11.class_,
-                'seat_num': student.extension_apply_11.seat
+            'extension11': {
+                'classNum': student.extension_apply_11.class_,
+                'seatNum': student.extension_apply_11.seat
             } if student.extension_apply_11 else None,
 
-            'extension_12': {
-                'class_num': student.extension_apply_12.class_,
-                'seat_num': student.extension_apply_12.seat
+            'extension12': {
+                'classNum': student.extension_apply_12.class_,
+                'seatNum': student.extension_apply_12.seat
             } if student.extension_apply_12 else None,
 
             'goingout': {
                 'sat': student.goingout_apply.on_saturday,
                 'sun': student.goingout_apply.on_sunday
             },
-            'stay_value': student.stay_apply.value,
-            'good_point': student.good_point,
-            'bad_point': student.bad_point
+            'stayValue': student.stay_apply.value,
+            'goodPoint': student.good_point,
+            'badPoint': student.bad_point
         }
 
         return self.unicode_safe_json_response(response)

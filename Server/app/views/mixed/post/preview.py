@@ -24,7 +24,7 @@ class FAQPreview(BaseResource):
                 return Response('', 204)
 
         response = {
-            'write_time': str(faq.write_time)[:10],
+            'writeTime': str(faq.write_time)[:10],
             'author': faq.author,
             'title': faq.title,
             'content': faq.content,
@@ -49,7 +49,7 @@ class NoticePreview(BaseResource):
                 return Response('', 204)
 
         response ={
-            'write_time': str(notice.write_time)[:10],
+            'writeTime': str(notice.write_time)[:10],
             'author': notice.author,
             'title': notice.title,
             'content': notice.content,
@@ -74,7 +74,7 @@ class RulePreview(BaseResource):
                 return Response('', 204)
 
         response = {
-            'write_time': str(rule.write_time)[:10],
+            'writeTime': str(rule.write_time)[:10],
             'author': rule.author,
             'title': rule.title,
             'content': rule.content,

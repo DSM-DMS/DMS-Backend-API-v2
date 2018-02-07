@@ -57,8 +57,8 @@ class Auth(BaseResource):
         # Generate new refresh token made up of uuid4
 
         return self.unicode_safe_json_response({
-            'access_token': create_access_token(id),
-            'refresh_token': create_refresh_token(str(refresh_token))
+            'accessToken': create_access_token(id),
+            'refreshToken': create_refresh_token(str(refresh_token))
         }, 200)
 
 
@@ -86,5 +86,5 @@ class Refresh(BaseResource):
             return Response('', 205)
 
         return self.unicode_safe_json_response({
-            'access_token': create_access_token(token.token_owner.id)
+            'accessToken': create_access_token(token.token_owner.id)
         }, 200)

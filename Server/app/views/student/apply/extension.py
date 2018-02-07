@@ -26,8 +26,8 @@ class Extension11(BaseResource):
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
         return ({
-            'class_num': student.extension_apply_11.class_,
-            'seat_num': student.extension_apply_11.seat
+            'classNum': student.extension_apply_11.class_,
+            'seatNum': student.extension_apply_11.seat
         }, 200) if student.extension_apply_11 else ('', 204)
 
     @swag_from(EXTENSION_POST)
@@ -45,8 +45,8 @@ class Extension11(BaseResource):
             # Not testing, can't apply
             return Response('', 204)
 
-        class_ = request.json['class_num']
-        seat = request.json['seat_num']
+        class_ = request.json['classNum']
+        seat = request.json['seatNum']
 
         student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat))
 
@@ -76,8 +76,8 @@ class Extension12(BaseResource):
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
         return ({
-            'class_num': student.extension_apply_12.class_,
-            'seat_num': student.extension_apply_12.seat
+            'classNum': student.extension_apply_12.class_,
+            'seatNum': student.extension_apply_12.seat
         }, 200) if student.extension_apply_12 else ('', 204)
 
     @swag_from(EXTENSION_POST)
@@ -95,8 +95,8 @@ class Extension12(BaseResource):
             # Not testing, can't apply
             return Response('', 204)
 
-        class_ = request.json['class_num']
-        seat = request.json['seat_num']
+        class_ = request.json['classNum']
+        seat = request.json['seatNum']
 
         student.update(extension_apply_12=ExtensionApplyModel(class_=class_,seat=seat))
 
@@ -161,7 +161,7 @@ class ExtensionMap11(BaseResource):
         """
         11시 연장신청 지도 조회
         """
-        class_ = int(request.args['class_num'])
+        class_ = int(request.args['classNum'])
 
         return self.unicode_safe_json_response(create_extension_map(class_, 11))
 
@@ -173,6 +173,6 @@ class ExtensionMap12(BaseResource):
         """
         12시 연장신청 지도 조회
         """
-        class_ = int(request.args['class_num'])
+        class_ = int(request.args['classNum'])
 
         return self.unicode_safe_json_response(create_extension_map(class_, 12))

@@ -25,11 +25,11 @@ class Survey(BaseResource):
 
         response = [{
             'id': str(survey.id),
-            'creation_time': str(survey.creation_time)[:10],
+            'creationTime': str(survey.creation_time)[:10],
             'description': survey.description,
             'title': survey.title,
-            'start_date': str(survey.start_date)[:10],
-            'end_date': str(survey.end_date)[:10]
+            'startDate': str(survey.start_date)[:10],
+            'endDate': str(survey.end_date)[:10]
         } for survey in SurveyModel.objects if int(student_number / 1000) in survey.target]
 
         return self.unicode_safe_json_response(response)
@@ -46,7 +46,7 @@ class Question(BaseResource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
-        survey_id = request.args['survey_id']
+        survey_id = request.args['surveyId']
         if len(survey_id) != 24:
             return Response('', 204)
 
@@ -57,8 +57,8 @@ class Question(BaseResource):
         response = [{
             'id': str(question.id),
             'title': question.title,
-            'is_objective': question.is_objective,
-            'choice_paper': question.choice_paper if question.is_objective else None
+            'isObjective': question.is_objective,
+            'choicePaper': question.choice_paper if question.is_objective else None
         } for question in QuestionModel.objects(survey=survey)]
 
         for question in response:
@@ -83,7 +83,7 @@ class Question(BaseResource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
-        question_id = request.json['question_id']
+        question_id = request.json['questionId']
         if len(question_id) != 24:
             return Response('', 204)
 
