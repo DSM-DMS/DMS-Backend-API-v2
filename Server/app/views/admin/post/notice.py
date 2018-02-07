@@ -1,12 +1,12 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.post.notice import *
 from app.models.account import AdminModel
 from app.models.post import NoticeModel
-from app.views import BaseResource
+from app.views import BaseResource, admin_only, json_required
 
 api = Api(Blueprint('admin-notice-api', __name__))
 api.prefix = '/admin'
@@ -15,14 +15,14 @@ api.prefix = '/admin'
 @api.resource('/notice')
 class NoticeManaging(BaseResource):
     @swag_from(NOTICE_MANAGING_POST)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def post(self):
         """
         공지사항 업로드
         """
-        title = request.form['title']
-        content = request.form['content']
+        title = request.json['title']
+        content = request.json['content']
 
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         notice = NoticeModel(author=admin.name, title=title, content=content).save()
@@ -32,15 +32,15 @@ class NoticeManaging(BaseResource):
         }, 201)
 
     @swag_from(NOTICE_MANAGING_PATCH)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def patch(self):
         """
         공지사항 수정
         """
-        id = request.form['id']
-        title = request.form['title']
-        content = request.form['content']
+        id = request.json['id']
+        title = request.json['title']
+        content = request.json['content']
 
         if len(id) != 24:
             return Response('', 204)
@@ -54,13 +54,13 @@ class NoticeManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(NOTICE_MANAGING_DELETE)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def delete(self):
         """
         공지사항 제거
         """
-        id = request.form['id']
+        id = request.json['id']
 
         if len(id) != 24:
             return Response('', 204)

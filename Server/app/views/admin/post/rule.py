@@ -1,12 +1,12 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.post.rule import *
 from app.models.account import AdminModel
 from app.models.post import RuleModel
-from app.views import BaseResource
+from app.views import BaseResource, admin_only, json_required
 
 api = Api(Blueprint('admin-rule-api', __name__))
 api.prefix = '/admin'
@@ -15,14 +15,14 @@ api.prefix = '/admin'
 @api.resource('/rule')
 class RuleManaging(BaseResource):
     @swag_from(RULE_MANAGING_POST)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def post(self):
         """
         기숙사규정 업로드
         """
-        title = request.form['title']
-        content = request.form['content']
+        title = request.json['title']
+        content = request.json['content']
 
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         rule = RuleModel(author=admin.name, title=title, content=content).save()
@@ -32,15 +32,15 @@ class RuleManaging(BaseResource):
         }, 201)
 
     @swag_from(RULE_MANAGING_PATCH)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def patch(self):
         """
         기숙사규정 수정
         """
-        id = request.form['id']
-        title = request.form['title']
-        content = request.form['content']
+        id = request.json['id']
+        title = request.json['title']
+        content = request.json['content']
 
         if len(id) != 24:
             return Response('', 204)
@@ -54,13 +54,13 @@ class RuleManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(RULE_MANAGING_DELETE)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def delete(self):
         """
         기숙사규정 제거
         """
-        id = request.form['id']
+        id = request.json['id']
 
         if len(id) != 24:
             return Response('', 204)

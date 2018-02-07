@@ -2,13 +2,13 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.student.account.alteration import *
 from app.models.account import StudentModel
-from app.views import BaseResource
+from app.views import BaseResource, json_required, student_only
 
 api = Api(Blueprint('student-account-alteration-api', __name__))
 
@@ -16,14 +16,13 @@ api = Api(Blueprint('student-account-alteration-api', __name__))
 @api.resource('/change/pw')
 class ChangePW(BaseResource):
     @swag_from(CHANGE_PW_POST)
-    @jwt_required
-    @BaseResource.student_only
+    @json_required
+    @student_only
     def post(self):
         """
         비밀번호 변경
         """
-        current_pw = request.form['current_pw']
-
+        current_pw = request.json['current_pw']
         current_pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=current_pw.encode(),
@@ -40,7 +39,7 @@ class ChangePW(BaseResource):
 
         # --- Change password
 
-        new_pw = request.form['new_pw']
+        new_pw = request.json['new_pw']
         new_pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=new_pw.encode(),
@@ -57,13 +56,13 @@ class ChangePW(BaseResource):
 @api.resource('/change/number')
 class ChangeNumber(BaseResource):
     @swag_from(CHANGE_NUMBER_POST)
-    @jwt_required
-    @BaseResource.student_only
+    @json_required
+    @student_only
     def post(self):
         """
         학번 변경
         """
-        new_number = int(request.form['new_number'])
+        new_number = request.json['new_number']
 
         student = StudentModel.objects(id=get_jwt_identity()).first()
         student.update(number=new_number)

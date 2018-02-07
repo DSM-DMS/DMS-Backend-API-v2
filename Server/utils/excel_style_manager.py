@@ -1,9 +1,10 @@
 from openpyxl.styles import Alignment, Color, Font, PatternFill
 
 
-def get_cell_positions_from_student_number(student):
-    number = student.number
-
+def get_cell_positions_by_student_number(number):
+    """
+    신청 정보 엑셀 파일에서 해당 학생의 정보들(학번, 이름, 상태)이 어떤 셀에 위치해야 할지를 결정합니다.
+    """
     # Get first row number
     grade = int(number / 1000)
     if grade == 1:
@@ -29,13 +30,25 @@ def get_cell_positions_from_student_number(student):
     return number_cell, name_cell, status_cell
 
 
+def _ready_cell(cell):
+    """
+    셀 하나에 대해 텍스트 가운데 정렬과 bold체 적용을 위한 모듈 단위 private 헬퍼 함수
+    """
+    cell.alignment = Alignment(horizontal='center')
+    cell.font = Font(bold=True)
+
+
 def ready_applyment_worksheet(ws):
+    """
+    신청 정보 엑셀 파일의 worksheet를 준비시키기 위함
+
+    하나의 worksheet에 1, 2, 3학년 정보가 모두 들어가므로, 2~69번 row와 A~P번 column까지 텍스트 가운데 정렬과 bold체를 적용합니다.
+    """
     for row in range(2, 70):
         for col in range(65, 81):
             cell = ws[chr(col) + str(row)]
 
-            cell.alignment = Alignment(horizontal='center')
-            cell.font = Font(bold=True)
+            _ready_cell(cell)
 
     ws['B2'] = ws['F2'] = ws['J2'] = ws['N2'] = ws['B25'] = ws['F25'] = ws['J25'] = ws['N25'] = ws['B47'] = ws['F47'] = ws['J47'] = ws['N47'] = '학번'
     ws['C2'] = ws['G2'] = ws['K2'] = ws['O2'] = ws['C25'] = ws['G25'] = ws['K25'] = ws['O25'] = ws['C47'] = ws['G47'] = ws['K47'] = ws['O47'] = '이름'
@@ -45,32 +58,18 @@ def ready_applyment_worksheet(ws):
 
 
 def ready_uuid_worksheet(ws):
+    """
+    학생 회원가입용 UUID 엑셀 파일의 worksheet를 준비하기 위함
+
+    하나의 worksheet당 반 하나의 정보가 들어가므로, 1~22번 row와 A~C번 column까지 텍스트 가운데 정렬과 bold체를 적용합니다.
+    """
     for row in range(1, 23):
         # 1 to 22
         for col in range(65, 68):
             cell = ws[chr(col) + str(row)]
 
-            cell.alignment = Alignment(horizontal='center')
-            cell.font = Font(bold=True)
+            _ready_cell(cell)
 
     ws['A1'] = '학번'
     ws['B1'] = '이름'
     ws['C1'] = 'Code'
-
-
-def ready_point_worksheet(ws):
-    for row in range(1, 83):
-        # 1 to 82
-        for col in range(65, 72):
-            cell = ws[chr(col) + str(row)]
-
-            cell.alignment = Alignment(horizontal='center')
-            cell.font = Font(bold=True)
-
-    ws['A1'] = '학번'
-    ws['B1'] = '이름'
-    ws['C1'] = '상점'
-    ws['D1'] = '벌점'
-    ws['E1'] = '상점 내역'
-    ws['F1'] = '벌점 내역'
-    ws['G1'] = '교육 단계'

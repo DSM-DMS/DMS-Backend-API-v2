@@ -1,12 +1,12 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.student.survey.survey import *
 from app.models.account import StudentModel
 from app.models.survey import AnswerModel, QuestionModel, SurveyModel
-from app.views import BaseResource
+from app.views import BaseResource, json_required, student_only
 
 api = Api(Blueprint('student-survey-api', __name__))
 
@@ -14,8 +14,7 @@ api = Api(Blueprint('student-survey-api', __name__))
 @api.resource('/survey')
 class Survey(BaseResource):
     @swag_from(SURVEY_GET)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         설문지 리스트 조회
@@ -40,8 +39,7 @@ class Survey(BaseResource):
 @api.resource('/survey/question')
 class Question(BaseResource):
     @swag_from(QUESTION_GET)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         설문지의 질문 리스트 조회
@@ -77,15 +75,15 @@ class Question(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(QUESTION_POST)
-    @jwt_required
-    @BaseResource.student_only
+    @json_required
+    @student_only
     def post(self):
         """
         설문지 질문의 답변 업로드
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
-        question_id = request.form['question_id']
+        question_id = request.json['question_id']
         if len(question_id) != 24:
             return Response('', 204)
 
@@ -94,7 +92,7 @@ class Question(BaseResource):
             # Question doesn't exist
             return Response('', 204)
 
-        answer = request.form['answer']
+        answer = request.json['answer']
 
         AnswerModel.objects(question=question, answer_student=student).delete()
         # Delete existing document

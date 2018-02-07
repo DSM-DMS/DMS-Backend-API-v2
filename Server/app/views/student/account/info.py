@@ -1,11 +1,11 @@
 from flask import Blueprint
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.student.account.info import MYPAGE_GET
 from app.models.account import StudentModel
-from app.views import BaseResource
+from app.views import BaseResource, student_only
 
 api = Api(Blueprint('student-info-api', __name__))
 
@@ -13,8 +13,7 @@ api = Api(Blueprint('student-info-api', __name__))
 @api.resource('/mypage')
 class MyPage(BaseResource):
     @swag_from(MYPAGE_GET)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         마이페이지에 해당하는 정보 조회

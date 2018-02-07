@@ -1,13 +1,12 @@
 import json
 
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required
 from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.survey.survey import *
 from app.models.survey import QuestionModel, SurveyModel
-from app.views import BaseResource
+from app.views import BaseResource, admin_only, json_required
 
 api = Api(Blueprint('admin-survey-api', __name__))
 api.prefix = '/admin'
@@ -16,8 +15,7 @@ api.prefix = '/admin'
 @api.resource('/survey')
 class SurveyManaging(BaseResource):
     @swag_from(SURVEY_MANAGING_GET)
-    @jwt_required
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         설문지 리스트 조회
@@ -34,17 +32,17 @@ class SurveyManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(SURVEY_MANAGING_POST)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def post(self):
         """
         설문지 등록
         """
-        title = request.form['title']
-        description = request.form['description']
-        start_date = request.form['start_date']
-        end_date = request.form['end_date']
-        target = json.loads(request.form['target'])
+        title = request.json['title']
+        description = request.json['description']
+        start_date = request.json['start_date']
+        end_date = request.json['end_date']
+        target = json.loads(request.json['target'])
 
         survey = SurveyModel(
             title=title,
@@ -59,13 +57,13 @@ class SurveyManaging(BaseResource):
         }, 201)
 
     @swag_from(SURVEY_MANAGING_DELETE)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def delete(self):
         """
         설문지 제거
         """
-        survey_id = request.form['survey_id']
+        survey_id = request.json['survey_id']
         if len(survey_id) != 24:
             return Response('', 204)
 
@@ -81,8 +79,7 @@ class SurveyManaging(BaseResource):
 @api.resource('/survey/question')
 class QuestionManaging(BaseResource):
     @swag_from(QUESTION_MANAGING_GET)
-    @jwt_required
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         설문지의 질문 리스트 조회
@@ -105,15 +102,13 @@ class QuestionManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(QUESTION_MANAGING_POST)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def post(self):
         """
         설문지에 질문 등록
         """
-        rq = request.json
-
-        survey_id = rq['survey_id']
+        survey_id = request.json['survey_id']
         if len(survey_id) != 24:
             return Response('', 204)
 
@@ -121,7 +116,7 @@ class QuestionManaging(BaseResource):
         if not survey:
             return Response('', 204)
 
-        questions = rq['questions']
+        questions = request.json['questions']
         for question in questions:
             title = question['title']
             is_objective = question['is_objective']

@@ -4,13 +4,13 @@ from uuid import uuid4
 
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import create_access_token, create_refresh_token
-from flask_jwt_extended import get_jwt_identity, jwt_required, jwt_refresh_token_required
+from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.student.account.auth import *
 from app.models.account import StudentModel, RefreshTokenModel
-from app.views import BaseResource
+from app.views import BaseResource, json_required, student_only
 
 api = Api(Blueprint('student-auth-api', __name__))
 
@@ -18,12 +18,13 @@ api = Api(Blueprint('student-auth-api', __name__))
 @api.resource('/auth')
 class Auth(BaseResource):
     @swag_from(AUTH_POST)
+    @json_required
     def post(self):
         """
         학생 로그인
         """
-        id = request.form['id']
-        pw = request.form['pw']
+        id = request.json['id']
+        pw = request.json['pw']
 
         pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
@@ -64,8 +65,7 @@ class Auth(BaseResource):
 @api.resource('/auth-check')
 class AuthCheck(BaseResource):
     @swag_from(AUTH_CHECK_GET)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def get(self):
         return Response('', 200)
 

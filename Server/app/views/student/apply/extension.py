@@ -1,14 +1,14 @@
 from datetime import datetime
 
 from flask import Blueprint, Response, current_app
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.student.apply.extension import *
 from app.models.account import StudentModel
 from app.models.apply import ExtensionApplyModel
-from app.views import BaseResource
+from app.views import BaseResource, json_required, student_only
 
 from utils.extension_meta import *
 
@@ -18,8 +18,7 @@ api = Api(Blueprint('student-extension-api', __name__))
 @api.resource('/extension/11')
 class Extension11(BaseResource):
     @swag_from(EXTENSION_GET)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         11시 연장신청 정보 조회
@@ -32,8 +31,8 @@ class Extension11(BaseResource):
         }, 200) if student.extension_apply_11 else ('', 204)
 
     @swag_from(EXTENSION_POST)
-    @jwt_required
-    @BaseResource.student_only
+    @json_required
+    @student_only
     def post(self):
         """
         11시 연장신청
@@ -42,20 +41,19 @@ class Extension11(BaseResource):
 
         now = datetime.now().time()
 
-        if not current_app.debug and not APPLY_START < now < APPLY_END_11:
+        if not current_app.testing and not APPLY_START < now < APPLY_END_11:
             # Not testing, can't apply
             return Response('', 204)
 
-        class_ = int(request.form['class_num'])
-        seat = int(request.form['seat_num'])
+        class_ = request.json['class_num']
+        seat = request.json['seat_num']
 
         student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat))
 
         return Response('', 201)
 
     @swag_from(EXTENSION_DELETE)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def delete(self):
         """
         11시 연장신청 취소
@@ -70,8 +68,7 @@ class Extension11(BaseResource):
 @api.resource('/extension/12')
 class Extension12(BaseResource):
     @swag_from(EXTENSION_GET)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         12시 연장신청 정보 조회
@@ -84,8 +81,8 @@ class Extension12(BaseResource):
         }, 200) if student.extension_apply_12 else ('', 204)
 
     @swag_from(EXTENSION_POST)
-    @jwt_required
-    @BaseResource.student_only
+    @json_required
+    @student_only
     def post(self):
         """
         12시 연장신청
@@ -94,20 +91,19 @@ class Extension12(BaseResource):
 
         now = datetime.now().time()
 
-        if not current_app.debug and not APPLY_START < now < APPLY_END_12:
+        if not current_app.testing and not APPLY_START < now < APPLY_END_12:
             # Not testing, can't apply
             return Response('', 204)
 
-        class_ = int(request.form['class_num'])
-        seat = int(request.form['seat_num'])
+        class_ = request.json['class_num']
+        seat = request.json['seat_num']
 
         student.update(extension_apply_12=ExtensionApplyModel(class_=class_,seat=seat))
 
         return Response('', 201)
 
     @swag_from(EXTENSION_DELETE)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def delete(self):
         """
         12시 연장신청 취소

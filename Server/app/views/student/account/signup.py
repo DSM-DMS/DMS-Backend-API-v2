@@ -7,7 +7,7 @@ from flasgger import swag_from
 
 from app.docs.student.account.signup import *
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
-from app.views import BaseResource
+from app.views import BaseResource, json_required
 
 api = Api(Blueprint('student-signup-api', __name__))
 
@@ -15,11 +15,12 @@ api = Api(Blueprint('student-signup-api', __name__))
 @api.resource('/verify/id')
 class IDVerification(BaseResource):
     @swag_from(ID_VERIFICATION_POST)
+    @json_required
     def post(self):
         """
         ID 중복체크
         """
-        id = request.form['id']
+        id = request.json['id']
 
         student = StudentModel.objects(id=id).first()
         admin = AdminModel.objects(id=id).first()
@@ -33,11 +34,12 @@ class IDVerification(BaseResource):
 @api.resource('/verify/uuid')
 class UUIDVerification(BaseResource):
     @swag_from(UUID_VERIFICATION_POST)
+    @json_required
     def post(self):
         """
         UUID에 대한 가입 가능 여부 검사
         """
-        uuid = request.form['uuid']
+        uuid = request.json['uuid']
 
         signup_waiting = SignupWaitingModel.objects(uuid=uuid)
         if signup_waiting:
@@ -50,14 +52,15 @@ class UUIDVerification(BaseResource):
 @api.resource('/signup')
 class Signup(BaseResource):
     @swag_from(SIGNUP_POST)
+    @json_required
     def post(self):
         """
         회원가입
         API 내부에서 한 번 더 ID 중복체크와 UUID 가입 가능 여부를 검사함
         """
-        uuid = request.form['uuid']
-        id = request.form['id']
-        pw = request.form['pw']
+        uuid = request.json['uuid']
+        id = request.json['id']
+        pw = request.json['pw']
 
         signup_waiting = SignupWaitingModel.objects(uuid=uuid).first()
         student = StudentModel.objects(id=id).first()

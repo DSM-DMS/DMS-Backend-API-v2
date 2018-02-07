@@ -5,11 +5,10 @@ from openpyxl import Workbook, load_workbook
 from uuid import uuid4
 
 from flask import Blueprint, Response, current_app
-from flask_jwt_extended import jwt_required
-from flask_restful import Api, abort, request
+from flask_restful import Api, request
 
 from app.models.account import AdminModel, SignupWaitingModel, StudentModel
-from app.views import BaseResource
+from app.views import BaseResource, json_required, system_only
 
 from utils.excel_style_manager import ready_uuid_worksheet
 
@@ -19,15 +18,12 @@ api.prefix = '/system'
 
 @api.resource('/account/admin')
 class AdminAccount(BaseResource):
-    @jwt_required
-    @BaseResource.system_only
+    @json_required
+    @system_only
     def post(self):
         """
         관리자 계정 생성
         """
-        if not request.is_json:
-            abort(400)
-
         id = request.json['id']
         pw = request.json['pw']
 
@@ -42,15 +38,12 @@ class AdminAccount(BaseResource):
 
         return Response('', 201)
 
-    @jwt_required
-    @BaseResource.system_only
+    @json_required
+    @system_only
     def delete(self):
         """
         관리자 계정 제거
         """
-        if not request.is_json:
-            abort(400)
-
         id = request.json['id']
         admin = AdminModel.objects(id=id).first()
 
@@ -64,16 +57,13 @@ class AdminAccount(BaseResource):
 
 @api.resource('/uuid-generate/new')
 class NewUUIDGeneration(BaseResource):
-    @jwt_required
-    @BaseResource.system_only
+    @json_required
+    @system_only
     def post(self):
         """
         가입되어 있지 않은 학생을 대상으로 UUID Generation
         이미 준비되어 있던 UUID는 제거되므로 주의 필요
         """
-        if not request.is_json:
-            abort(400)
-
         student_list = request.json
         workbooks = [Workbook() for _ in range(12)]
 
@@ -131,8 +121,10 @@ class ExcelUUIDToDB(BaseResource):
                             number=int(wb['B{0}'.format(k)].value)
                         ).save()
 
-    @jwt_required
-    @BaseResource.system_only
+    @system_only
     def post(self):
+        """
+        이미 만들어진 엑셀 파일을 이용해 UUID 재삽입
+        """
         self._uuid_excel_save()
         return Response('', 201)

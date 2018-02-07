@@ -1,11 +1,10 @@
 from flasgger import swag_from
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required
 from flask_restful import Api
 
 from app.docs.mixed.post.preview import *
 from app.models.post import FAQModel, NoticeModel, RuleModel
-from app.views import BaseResource
+from app.views import BaseResource, signed_account_only
 
 api = Api(Blueprint('preview-api', __name__))
 
@@ -13,8 +12,7 @@ api = Api(Blueprint('preview-api', __name__))
 @api.resource('/preview/faq')
 class FAQPreview(BaseResource):
     @swag_from(FAQ_PREVIEW_GET)
-    @jwt_required
-    @BaseResource.signed_account_only
+    @signed_account_only
     def get(self):
         """
         FAQ 프리뷰 조회
@@ -39,8 +37,7 @@ class FAQPreview(BaseResource):
 @api.resource('/preview/notice')
 class NoticePreview(BaseResource):
     @swag_from(NOTICE_PREVIEW_GET)
-    @jwt_required
-    @BaseResource.signed_account_only
+    @signed_account_only
     def get(self):
         """
         공지사항 프리뷰 조회
@@ -65,8 +62,7 @@ class NoticePreview(BaseResource):
 @api.resource('/preview/rule')
 class RulePreview(BaseResource):
     @swag_from(RULE_PREVIEW_GET)
-    @jwt_required
-    @BaseResource.signed_account_only
+    @signed_account_only
     def get(self):
         """
         기숙사규정 프리뷰 조회

@@ -1,11 +1,10 @@
 from flasgger import swag_from
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required
 from flask_restful import Api
 
 from app.docs.mixed.post.faq import *
 from app.models.post import FAQModel
-from app.views import BaseResource
+from app.views import BaseResource, signed_account_only
 
 api = Api(Blueprint('faq-api', __name__))
 
@@ -13,8 +12,7 @@ api = Api(Blueprint('faq-api', __name__))
 @api.resource('/faq')
 class FAQList(BaseResource):
     @swag_from(FAQ_LIST_GET)
-    @jwt_required
-    @BaseResource.signed_account_only
+    @signed_account_only
     def get(self):
         """
         FAQ 리스트 조회
@@ -33,8 +31,7 @@ class FAQList(BaseResource):
 @api.resource('/faq/<post_id>')
 class FAQItem(BaseResource):
     @swag_from(FAQ_ITEM_GET)
-    @jwt_required
-    @BaseResource.signed_account_only
+    @signed_account_only
     def get(self, post_id):
         """
         FAQ 내용 조회
