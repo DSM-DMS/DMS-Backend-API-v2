@@ -12,21 +12,21 @@ NEW_ACCOUNT_POST = {
         {
             'name': 'id',
             'description': '생성할 관리자 계정 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'pw',
             'description': '생성할 관리자 계정 PW',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'name',
             'description': '생성활 관리자 계정 이름',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -37,6 +37,9 @@ NEW_ACCOUNT_POST = {
         },
         '204': {
             'description': '계정 생성 실패(이미 존재하는 ID)'
+        },
+        '401': {
+            'description': 'JWT Token 없음'
         },
         '403': {
             'description': '권한 없음'

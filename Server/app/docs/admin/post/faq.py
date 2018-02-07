@@ -12,14 +12,14 @@ FAQ_MANAGING_POST = {
         {
             'name': 'title',
             'description': 'FAQ 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'content',
             'description': 'FAQ 내용',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -53,21 +53,21 @@ FAQ_MANAGING_PATCH = {
         {
             'name': 'id',
             'description': '수정할 FAQ ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'title',
             'description': 'FAQ 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'content',
             'description': 'FAQ 내용',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -99,7 +99,7 @@ FAQ_MANAGING_DELETE = {
         {
             'name': 'id',
             'description': '삭제할 FAQ ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }

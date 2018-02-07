@@ -12,14 +12,14 @@ NOTICE_MANAGING_POST = {
         {
             'name': 'title',
             'description': '공지사항 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'content',
             'description': '공지사항 내용',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -53,21 +53,21 @@ NOTICE_MANAGING_PATCH = {
         {
             'name': 'id',
             'description': '수정할 공지사항 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'title',
             'description': '공지사항 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'content',
             'description': '공지사항 내용',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -99,7 +99,7 @@ NOTICE_MANAGING_DELETE = {
         {
             'name': 'id',
             'description': '삭제할 공지사항 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }

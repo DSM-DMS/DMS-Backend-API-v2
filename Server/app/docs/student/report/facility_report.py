@@ -12,21 +12,21 @@ FACILITY_REPORT_POST = {
         {
             'name': 'title',
             'description': '시설고장신고 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'content',
             'description': '시설고장신고 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'room',
             'description': '호실 번호',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         }

@@ -17,19 +17,19 @@ SURVEY_GET = {
                 'application/json': [
                     {
                         'id': 's3qldmc13opeflds',
-                        'creationTime': '2017-12-26',
+                        'creation_time': '2017-12-26',
                         'title': '내일 저녁 치킨먹기 찬반설문',
                         'description': '설명!',
-                        'startDate': '2017-10-24',
-                        'endDate': '2017-10-25'
+                        'start_date': '2017-10-24',
+                        'end_date': '2017-10-25'
                     },
                     {
                         'id': '1fnfdj3391idkflds',
-                        'creationTime': '2017-12-26',
+                        'creation_time': '2017-12-26',
                         'title': '등교 후 12시간 자습 찬반설문',
                         'description': '설명!',
-                        'startDate': '2017-10-24',
-                        'endDate': '2017-10-30'
+                        'start_date': '2017-10-24',
+                        'end_date': '2017-10-30'
                     }
                 ]
             }
@@ -52,7 +52,7 @@ QUESTION_GET = {
             'required': True
         },
         {
-            'name': 'surveyId',
+            'name': 'survey_id',
             'description': '설문지 ID',
             'in': 'query',
             'type': 'str',
@@ -67,14 +67,14 @@ QUESTION_GET = {
                     {
                         'id': '13211265df16ads',
                         'title': '저녁에 치킨을 먹고 싶습니까?',
-                        'isObjective': True,
-                        'choicePaper': ['예', '아니오'],
+                        'is_objective': True,
+                        'choice_paper': ['예', '아니오'],
                         'answer': '예'
                     },
                     {
                         'id': '11265cd65432r9',
                         'title': '어디 치킨이 좋습니까?',
-                        'isObjective': False,
+                        'is_objective': False,
                         'answer': None
                     }
                 ]
@@ -103,14 +103,14 @@ QUESTION_POST = {
         {
             'name': 'question_id',
             'description': '질문 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'answer',
             'description': '답변',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }

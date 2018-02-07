@@ -12,14 +12,14 @@ RULE_MANAGING_POST = {
         {
             'name': 'title',
             'description': '기숙사규정 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'content',
             'description': '기숙사규정 내용',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -56,21 +56,21 @@ RULE_MANAGING_PATCH = {
         {
             'name': 'id',
             'description': '수정할 기숙사규정 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'title',
             'description': '기숙사규정 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'content',
             'description': '기숙사규정 내용',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -99,7 +99,7 @@ RULE_MANAGING_DELETE = {
         {
             'name': 'id',
             'description': '삭제할 기숙사규정 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }

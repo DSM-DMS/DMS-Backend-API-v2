@@ -56,23 +56,23 @@ POINT_MANAGING_POST = {
             'required': True
         },
         {
-            'name': 'studentId',
+            'name': 'id',
             'description': '상벌점 데이터 등록 대상 학생 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'ruleId',
+            'name': 'rule_id',
             'description': '상벌점을 부여하기 위한 규칙 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'point',
             'description': '상벌점(상점은 양수, 벌점은 음수)',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         }
@@ -95,7 +95,7 @@ POINT_MANAGING_POST = {
 
 POINT_MANAGING_DELETE = {
     'tags': ['상벌점 관리'],
-    'description': '상벌점 내역 삭제',
+    'description': '상벌점 데이터 삭제',
     'parameters': [
         {
             'name': 'Authorization',
@@ -105,29 +105,29 @@ POINT_MANAGING_DELETE = {
             'required': True
         },
         {
-            'name': 'studentId',
-            'description': '상벌점 내역 삭제 대상 학생 ID',
-            'in': 'formData',
+            'name': 'student_id',
+            'description': '상벌점 데이터 삭제 대상 학생 ID',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'historyId',
-            'description': '삭제할 상벌점 내역의 ID',
-            'in': 'formData',
+            'name': 'point_id',
+            'description': '삭제할 상벌점 데이터 ID',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
     ],
     'responses': {
         '200': {
-            'description': '상벌점 내역 삭제 성공'
+            'description': '상벌점 데이터 삭제 성공'
         },
         '204': {
             'description': '존재하지 않는 학생 ID'
         },
         '205': {
-            'description': '존재하지 않는 상벌점 내역 ID'
+            'description': '존재하지 않는 상벌점 데이터 ID'
         },
         '403': {
             'description': '권한 없음'

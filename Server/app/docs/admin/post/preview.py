@@ -12,7 +12,7 @@ FAQ_PREVIEW_MANAGING_POST = {
         {
             'name': 'id',
             'description': 'FAQ ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -44,7 +44,7 @@ NOTICE_PREVIEW_MANAGING_POST = {
         {
             'name': 'id',
             'description': '공지사항 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
@@ -76,7 +76,7 @@ RULE_PREVIEW_MANAGING_POST = {
         {
             'name': 'id',
             'description': '기숙사규정 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }

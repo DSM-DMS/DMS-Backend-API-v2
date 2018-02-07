@@ -45,7 +45,7 @@ STAY_POST = {
             3: 토요귀사
             4: 잔류
             ''',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         }

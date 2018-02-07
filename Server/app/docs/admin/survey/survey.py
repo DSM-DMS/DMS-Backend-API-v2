@@ -54,35 +54,35 @@ SURVEY_MANAGING_POST = {
         {
             'name': 'description',
             'description': '설문지 설명',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'title',
             'description': '설문지 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'start_date',
             'description': '시작 날짜(YYYY-MM-DD)',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'end_date',
             'description': '종료 날짜(YYYY-MM-DD)',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'target',
             'description': '대상 학년',
-            'in': 'formData',
+            'in': 'json',
             'type': 'list',
             'required': True
         }
@@ -195,28 +195,28 @@ QUESTION_MANAGING_POST = {
         {
             'name': 'survey_id',
             'description': '질문을 추가할 설문지 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'title',
             'description': '질문 제목',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'is_objective',
             'description': '객관식 여부',
-            'in': 'formData',
+            'in': 'json',
             'type': 'bool',
             'required': True
         },
         {
             'name': 'choice_paper',
             'description': '객관식 선택지',
-            'in': 'formData',
+            'in': 'json',
             'type': 'list',
             'required': False
         }

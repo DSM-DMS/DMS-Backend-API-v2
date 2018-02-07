@@ -43,14 +43,14 @@ GOINGOUT_POST = {
         {
             'name': 'sat',
             'description': '토요일 외출 여부',
-            'in': 'formData',
+            'in': 'json',
             'type': 'bool',
             'required': True
         },
         {
             'name': 'sun',
             'description': '일요일 외출 여부',
-            'in': 'formData',
+            'in': 'json',
             'type': 'bool',
             'required': True
         }

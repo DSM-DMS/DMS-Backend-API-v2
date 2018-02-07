@@ -15,8 +15,8 @@ EXTENSION_GET = {
             'description': '연장신청 정보 조회 성공',
             'examples': {
                 'application/json': {
-                    'classNum': 1,
-                    'seatNum': 16
+                    'class_num': 1,
+                    'seat_num': 16
                 }
             }
         },
@@ -52,14 +52,14 @@ EXTENSION_POST = {
             6: 4층 독서실
             7: 5층 열린교실
             ''',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         },
         {
             'name': 'seat_num',
             'description': '연장 학습실 자리 번호',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         }
@@ -104,9 +104,9 @@ EXTENSION_MAP_GET = {
     'description': '연장신청 지도 조회',
     'parameters': [
         {
-            'name': 'classNum',
+            'name': 'class_num',
             'description': '지도를 조회할 학습실 번호',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         }

@@ -19,9 +19,9 @@ STUDENT_MANAGING_GET = {
                         'id': 'city7310',
                         'name': '조민규',
                         'number': 2120,
-                        'goodPoint': 1,
-                        'badPoint': 50,
-                        'pointHistories': [
+                        'good_point': 1,
+                        'bad_point': 50,
+                        'point_histories': [
                             {
                                 'time': '2018-01-01 12:34:12',
                                 'reason': '치킨 먹음',
@@ -33,15 +33,15 @@ STUDENT_MANAGING_GET = {
                                 'point': -3
                             }
                         ],
-                        'penaltyTrainingStatus': 4
+                        'penalty_training_status': 4
                     },
                     {
                         'id': 'geni429',
                         'name': '정근철',
                         'number': 2117,
-                        'goodPoint': 0,
-                        'badPoint': 0,
-                        'pointHistories': [
+                        'good_point': 0,
+                        'bad_point': 0,
+                        'point_histories': [
                             {
                                 'time': '2018-01-01 12:34:12',
                                 'reason': '치킨 먹음',
@@ -53,7 +53,7 @@ STUDENT_MANAGING_GET = {
                                 'point': -3
                             }
                         ],
-                        'penaltyTrainingStatus': 0
+                        'penalty_training_status': 0
                     }
                 ]
             }

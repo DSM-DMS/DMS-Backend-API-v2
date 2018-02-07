@@ -18,14 +18,14 @@ POINT_RULE_MANAGING_GET = {
                     {
                         'id': '2316ca13cb1a',
                         'name': '치킨이 맛있는 규칙',
-                        'minPoint': 1,
-                        'maxPoint': 3
+                        'min_point': 1,
+                        'max_point': 3
                     },
                     {
                         'id': '2316ca13cb1b',
                         'name': '저녁에 배고픈 규칙',
-                        'minPoint': -1,
-                        'maxPoint': -3
+                        'min_point': -1,
+                        'max_point': -3
                     }
                 ]
             }
@@ -50,21 +50,21 @@ POINT_RULE_MANAGING_POST = {
         {
             'name': 'name',
             'description': '상벌점 규칙의 이름',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'minPoint',
+            'name': 'min_point',
             'description': '최소 점수',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         },
         {
-            'name': 'maxPoint',
+            'name': 'max_point',
             'description': '최대 점수',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         }
@@ -96,30 +96,30 @@ POINT_RULE_MANAGING_PATCH = {
             'required': True
         },
         {
-            'name': 'ruleId',
+            'name': 'rule_id',
             'description': '수정할 상벌점 규칙 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
             'name': 'name',
             'description': '상벌점 규칙의 이름',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'minPoint',
+            'name': 'min_point',
             'description': '최소 점수',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         },
         {
-            'name': 'maxPoint',
+            'name': 'max_point',
             'description': '최대 점수',
-            'in': 'formData',
+            'in': 'json',
             'type': 'int',
             'required': True
         }
@@ -149,9 +149,9 @@ POINT_RULE_MANAGING_DELETE = {
             'required': True
         },
         {
-            'name': 'ruleId',
+            'name': 'rule_id',
             'description': '삭제할 상벌점 규칙 ID',
-            'in': 'formData',
+            'in': 'json',
             'type': 'str',
             'required': True
         }
