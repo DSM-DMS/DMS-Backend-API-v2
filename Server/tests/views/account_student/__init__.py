@@ -32,12 +32,12 @@ def remove_fake_account(id='fake_student'):
 
 
 def get_access_token(client, id='fake_student', pw='fake'):
-    rv = client.post('/auth', data=json.dumps({'id': id, 'pw': pw}), content_type='application/json')
+    res = client.post('/auth', data=json.dumps({'id': id, 'pw': pw}), content_type='application/json')
 
-    return 'JWT ' + json.loads(rv.data.decode())['access_token']
+    return 'JWT ' + json.loads(res.data.decode())['accessToken']
 
 
 def get_refresh_token(client, id='fake_student', pw='fake'):
-    rv = client.post('/auth', data=json.dumps({'id': id, 'pw': pw}), content_type='application/json')
+    res = client.post('/auth', data=json.dumps({'id': id, 'pw': pw}), content_type='application/json')
 
-    return 'JWT ' + json.loads(rv.data.decode())['refresh_token']
+    return 'JWT ' + json.loads(res.data.decode())['refreshToken']
