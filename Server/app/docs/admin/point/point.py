@@ -56,14 +56,14 @@ POINT_MANAGING_POST = {
             'required': True
         },
         {
-            'name': 'id',
+            'name': 'studentId',
             'description': '상벌점 데이터 등록 대상 학생 ID',
             'in': 'formData',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'rule_id',
+            'name': 'ruleId',
             'description': '상벌점을 부여하기 위한 규칙 ID',
             'in': 'formData',
             'type': 'str',
@@ -95,7 +95,7 @@ POINT_MANAGING_POST = {
 
 POINT_MANAGING_DELETE = {
     'tags': ['상벌점 관리'],
-    'description': '상벌점 데이터 삭제',
+    'description': '상벌점 내역 삭제',
     'parameters': [
         {
             'name': 'Authorization',
@@ -105,15 +105,15 @@ POINT_MANAGING_DELETE = {
             'required': True
         },
         {
-            'name': 'student_id',
-            'description': '상벌점 데이터 삭제 대상 학생 ID',
+            'name': 'studentId',
+            'description': '상벌점 내역 삭제 대상 학생 ID',
             'in': 'formData',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'point_id',
-            'description': '삭제할 상벌점 데이터 ID',
+            'name': 'historyId',
+            'description': '삭제할 상벌점 내역의 ID',
             'in': 'formData',
             'type': 'str',
             'required': True
@@ -121,13 +121,13 @@ POINT_MANAGING_DELETE = {
     ],
     'responses': {
         '200': {
-            'description': '상벌점 데이터 삭제 성공'
+            'description': '상벌점 내역 삭제 성공'
         },
         '204': {
             'description': '존재하지 않는 학생 ID'
         },
         '205': {
-            'description': '존재하지 않는 상벌점 데이터 ID'
+            'description': '존재하지 않는 상벌점 내역 ID'
         },
         '403': {
             'description': '권한 없음'
