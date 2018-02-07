@@ -6,6 +6,11 @@ from tests.views import TCBase
 
 
 class TestAccountControl(TCBase):
+    def tearDown(self):
+        SignupWaitingModel.objects.delete()
+
+        TCBase.tearDown(self)
+
     def testA_deleteStudentAccount(self):
         """
         TC about existing student account deletion
@@ -23,9 +28,6 @@ class TestAccountControl(TCBase):
 
         Forbidden with student access token
         * Test passes : status code 403
-
-        - After Test
-        Clear SignupWaitingModel
         """
         # -- Before Test --
         # -- Before Test --
@@ -37,7 +39,7 @@ class TestAccountControl(TCBase):
             content_type='application/json',
             headers={'Authorization': self.admin_access_token}
         )
-        self.assertTrue(res.status_code == 201)
+        self.assertEqual(res.status_code, 201)
 
         response_data = json.loads(res.data.decode())
         self.assertTrue('uuid' in response_data)
@@ -51,19 +53,16 @@ class TestAccountControl(TCBase):
             content_type='application/json',
             headers={'Authorization': self.admin_access_token}
         )
-        self.assertTrue(res.status_code == 204)
+        self.assertEqual(res.status_code, 204)
 
         res = self.client.delete(
             '/admin/account-control/student',
+            data=json.dumps({'number': 0000}),
             content_type='application/json',
             headers={'Authorization': self.student_access_token}
         )
-        self.assertTrue(res.status_code == 403)
+        self.assertEqual(res.status_code, 403)
         # -- Exception Test --
-
-        # -- After Test --
-        SignupWaitingModel.objects.delete()
-        # -- After Test --
 
     def testB_deleteAlreadySignupWaitingStudent(self):
         """
@@ -85,22 +84,22 @@ class TestAccountControl(TCBase):
         """
         # -- Before Test --
         res = self.client.delete(
-            '/admin/account-control',
+            '/admin/account-control/student',
             data=json.dumps({'number': 1111}),
             content_type='application/json',
-            headers={'Authorization': self.admin_access_token},
+            headers={'Authorization': self.admin_access_token}
         )
-        self.assertTrue(res.status_code == 201)
+        self.assertEqual(res.status_code, 201)
         # -- Before Test --
 
         # -- Test --
         res = self.client.delete(
-            '/admin/account-control',
+            '/admin/account-control/student',
             data=json.dumps({'number': 1111}),
             content_type='application/json',
-            headers={'Authorization': self.admin_access_token},
+            headers={'Authorization': self.admin_access_token}
         )
-        self.assertTrue(res.status_code == 200)
+        self.assertEqual(res.status_code, 200)
 
         response_data = json.loads(res.data.decode())
         self.assertTrue('uuid' in response_data)
@@ -110,6 +109,51 @@ class TestAccountControl(TCBase):
         # -- Exception Test --
         # -- Exception Test --
 
-        # -- After Test --
-        SignupWaitingModel.objects.delete()
-        # -- After Test --
+    def testC_createNewAdminAccount(self):
+        """
+        TC about new admin account creation
+
+        - Before Test
+        None
+
+        - Test
+        Create new admin account
+        * Test passes : status code 201
+
+        - Exception Test
+        Already existing ID
+        * Test passes : status code 204
+
+        Forbidden with student access token
+        * Test passes : status code 403
+        """
+        # -- Before Test --
+        # -- Before Test --
+
+        # -- Test --
+        res = self.client.post(
+            '/admin/account-control/admin',
+            data=json.dumps({'id': 'new', 'pw': 'new', 'name': 'new'}),
+            content_type='application/json',
+            headers={'Authorization': self.admin_access_token}
+        )
+        self.assertEqual(res.status_code, 201)
+        # -- Test --
+
+        # -- Exception Test --
+        res = self.client.post(
+            '/admin/account-control/admin',
+            data=json.dumps({'id': 'fake_admin', 'pw': 'new', 'name': 'new'}),
+            content_type='application/json',
+            headers={'Authorization': self.admin_access_token}
+        )
+        self.assertEqual(res.status_code, 204)
+
+        res = self.client.post(
+            '/admin/account-control/admin',
+            data=json.dumps({'id': 'new', 'pw': 'new', 'name': 'new'}),
+            content_type='application/json',
+            headers={'Authorization': self.student_access_token}
+        )
+        self.assertEqual(res.status_code, 403)
+        # -- Exception Test --
