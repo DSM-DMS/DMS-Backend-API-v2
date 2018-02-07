@@ -22,11 +22,11 @@ class SurveyManaging(BaseResource):
         """
         response = [{
             'id': str(survey.id),
-            'creation_time': str(survey.creation_time)[:10],
+            'creationTime': str(survey.creation_time)[:10],
             'title': survey.title,
             'description': survey.description,
-            'start_date': str(survey.start_date),
-            'end_date': str(survey.end_date)
+            'startDate': str(survey.start_date),
+            'endDate': str(survey.end_date)
         } for survey in SurveyModel.objects if QuestionModel.objects(survey=survey).count()]
 
         return self.unicode_safe_json_response(response)
@@ -40,8 +40,8 @@ class SurveyManaging(BaseResource):
         """
         title = request.json['title']
         description = request.json['description']
-        start_date = request.json['start_date']
-        end_date = request.json['end_date']
+        start_date = request.json['startDate']
+        end_date = request.json['endDate']
         target = json.loads(request.json['target'])
 
         survey = SurveyModel(
@@ -52,9 +52,9 @@ class SurveyManaging(BaseResource):
             target=target
         ).save()
 
-        return self.unicode_safe_json_response({
+        return {
             'id': str(survey.id)
-        }, 201)
+        }, 201
 
     @swag_from(SURVEY_MANAGING_DELETE)
     @json_required
@@ -63,7 +63,7 @@ class SurveyManaging(BaseResource):
         """
         설문지 제거
         """
-        survey_id = request.json['survey_id']
+        survey_id = request.json['surveyId']
         if len(survey_id) != 24:
             return Response('', 204)
 
@@ -84,7 +84,7 @@ class QuestionManaging(BaseResource):
         """
         설문지의 질문 리스트 조회
         """
-        survey_id = request.args['survey_id']
+        survey_id = request.args['surveyId']
         if len(survey_id) != 24:
             return Response('', 204)
 
@@ -95,8 +95,8 @@ class QuestionManaging(BaseResource):
         response = [{
             'id': str(question.id),
             'title': question.title,
-            'is_objective': question.is_objective,
-            'choice_paper': question.choice_paper if question.is_objective else None
+            'isObjective': question.is_objective,
+            'choicePaper': question.choice_paper if question.is_objective else None
         } for question in QuestionModel.objects(survey=survey)]
 
         return self.unicode_safe_json_response(response)
@@ -108,7 +108,7 @@ class QuestionManaging(BaseResource):
         """
         설문지에 질문 등록
         """
-        survey_id = request.json['survey_id']
+        survey_id = request.json['surveyId']
         if len(survey_id) != 24:
             return Response('', 204)
 
@@ -119,7 +119,7 @@ class QuestionManaging(BaseResource):
         questions = request.json['questions']
         for question in questions:
             title = question['title']
-            is_objective = question['is_objective']
+            is_objective = question['isObjective']
 
             QuestionModel(
                 survey=survey,
