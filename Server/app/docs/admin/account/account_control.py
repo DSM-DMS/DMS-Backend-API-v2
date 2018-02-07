@@ -22,12 +22,15 @@ ACCOUNT_CONTROL_POST = {
             'description': '계정 삭제, UUID 생성 성공',
             'examples': {
                 'application/json': {
-                    'UUID': '022d'
+                    'uuid': '022d'
                 }
             }
         },
         '204': {
-            'description': '해당 학번에 해당하는 계정, UUID 없음'
+            'description': '해당 학번에 해당하는 학생이 없음'
+        },
+        '205': {
+            'description': 'UUID가 이미 생성되었으며, 가입되지 않은 상태'
         },
         '403': {
             'description': '권한 없음'

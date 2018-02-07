@@ -23,33 +23,32 @@ class AccountControl(BaseResource):
         """
         number = request.json['number']
 
+        signup_waiting = StudentModel.objects(number=number).first()
+        if signup_waiting:
+            return Response('', 205)
+
         student = StudentModel.objects(number=number).first()
-        if student:
-            name = student.name
-            student.delete()
-
-            while True:
-                uuid = str(uuid4())[:4]
-
-                if not SignupWaitingModel.objects(uuid=str(uuid)):
-                    SignupWaitingModel(
-                        uuid=uuid,
-                        name=name,
-                        number=number
-                    ).save()
-
-                    break
-
-        signup_waiting = SignupWaitingModel.objects(number=number).first()
-
-        if not signup_waiting:
+        if not student:
             return Response('', 204)
 
-        uuid = signup_waiting.uuid
+        name = student.name
+        student.delete()
 
-        return self.unicode_safe_json_response({
+        while True:
+            uuid = str(uuid4())[:4]
+
+            if not SignupWaitingModel.objects(uuid=uuid):
+                SignupWaitingModel(
+                    uuid=uuid,
+                    name=name,
+                    number=number
+                ).save()
+
+                break
+
+        return {
             'uuid': uuid
-        }, 201)
+        }, 201
 
     @swag_from(ACCOUNT_CONTROL_DELETE)
     @json_required

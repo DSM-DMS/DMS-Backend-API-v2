@@ -15,7 +15,8 @@ class SignupWaitingModel(Document):
     }
 
     uuid = StringField(
-        primary_key=True
+        primary_key=True,
+        max_length=4
     )
     name = StringField(
         required=True
