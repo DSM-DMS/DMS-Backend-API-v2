@@ -1,11 +1,10 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required
 from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.point.rule import *
 from app.models.point import PointRuleModel
-from app.views import BaseResource
+from app.views import BaseResource, admin_only, json_required
 
 api = Api(Blueprint('admin-point-rule-api', __name__))
 api.prefix = '/admin/managing'
@@ -14,8 +13,8 @@ api.prefix = '/admin/managing'
 @api.resource('/rule')
 class PointRuleManaging(BaseResource):
     @swag_from(POINT_RULE_MANAGING_GET)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def get(self):
         """
         상벌점 규칙 목록 조회
@@ -23,22 +22,22 @@ class PointRuleManaging(BaseResource):
         response = [{
             'id': str(rule.id),
             'name': rule.name,
-            'min_point': rule.min_point,
-            'max_point': rule.max_point
+            'minPoint': rule.min_point,
+            'maxPoint': rule.max_point
         } for rule in PointRuleModel.objects]
 
         return self.unicode_safe_json_response(response)
 
     @swag_from(POINT_RULE_MANAGING_POST)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def post(self):
         """
         상벌점 규칙 추가
         """
-        name = request.form['name']
-        min_point = int(request.form['min_point'])
-        max_point = int(request.form['max_point'])
+        name = request.json['name']
+        min_point = request.json['minPoint']
+        max_point = request.json['maxPoint']
 
         rule = PointRuleModel(
             name=name,
@@ -51,13 +50,13 @@ class PointRuleManaging(BaseResource):
         }, 201
 
     @swag_from(POINT_RULE_MANAGING_PATCH)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def patch(self):
         """
         상벌점 규칙 수정
         """
-        rule_id = request.form['rule_id']
+        rule_id = request.json['ruleId']
         if len(rule_id) != 24:
             return Response('', 204)
 
@@ -65,9 +64,9 @@ class PointRuleManaging(BaseResource):
         if not rule:
             return Response('', 204)
 
-        name = request.form['name']
-        min_point = int(request.form['min_point'])
-        max_point = int(request.form['max_point'])
+        name = request.json['name']
+        min_point = request.json['minPoint']
+        max_point = request.json['maxPoint']
 
         rule.update(
             name=name,
@@ -78,13 +77,13 @@ class PointRuleManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(POINT_RULE_MANAGING_DELETE)
-    @jwt_required
-    @BaseResource.admin_only
+    @json_required
+    @admin_only
     def delete(self):
         """
         상벌점 규칙 삭제
         """
-        rule_id = request.form['rule_id']
+        rule_id = request.json['ruleId']
         if len(rule_id) != 24:
             return Response('', 204)
 
