@@ -2,8 +2,8 @@
 Origin repository : <a href="https://github.com/DSM-DMS/DMS-Backend">DMS-Backend</a>
 
 ## 주 목표
-(x) 요청 데이터를 받는 곳을 application/form-data나 application/x-www-form-urlencoded가 아닌 application/json으로 변경
-(x) request/response에서 JSON Object의 key를 snake case에서 camel case로 변경(access_token to accessToken)
-(x) 테스트 케이스의 legacy 제거, Content-Type 변경
-(x) Swagger doc을 모델 기반으로 변경
-(x) Collection name과 collection 분할 방식 변경으로 인한 MongoDB Migrator 구현
+- [x] 요청 데이터를 받는 곳을 application/form-data나 application/x-www-form-urlencoded가 아닌 application/json으로 변경
+- [x] request/response에서 JSON Object의 key를 snake case에서 camel case로 변경(access_token to accessToken)
+- [x] 테스트 케이스의 legacy 제거, Content-Type 변경
+- [x] Swagger doc을 모델 기반으로 변경
+- [x] Collection name과 collection 분할 방식 변경으로 인한 MongoDB Migrator 구현
