@@ -1,7 +1,9 @@
+from binascii import hexlify
+from hashlib import pbkdf2_hmac
 from uuid import uuid4
 
 from flask import Blueprint, Response
-from flask_restful import Api, request
+from flask_restful import Api, current_app, request
 from flasgger import swag_from
 
 from app.docs.admin.account.account_control import *
@@ -12,20 +14,22 @@ api = Api(Blueprint('admin-account-control-api', __name__))
 api.prefix = '/admin'
 
 
-@api.resource('/account-control')
-class AccountControl(BaseResource):
-    @swag_from(ACCOUNT_CONTROL_POST)
+@api.resource('/account-control/student')
+class StudentAccountControl(BaseResource):
+    @swag_from(STUDENT_ACCOUNT_CONTROL_DELETE)
     @json_required
     @admin_only
-    def post(self):
+    def delete(self):
         """
         학생 계정 제거 후 새로운 UUID 생성
         """
         number = request.json['number']
 
-        signup_waiting = StudentModel.objects(number=number).first()
+        signup_waiting = SignupWaitingModel.objects(number=number).first()
         if signup_waiting:
-            return Response('', 205)
+            return {
+                'uuid': signup_waiting.uuid
+            }, 200
 
         student = StudentModel.objects(number=number).first()
         if not student:
@@ -50,7 +54,40 @@ class AccountControl(BaseResource):
             'uuid': uuid
         }, 201
 
-    @swag_from(ACCOUNT_CONTROL_DELETE)
+
+@api.resource('/account-control/admin')
+class AdminAccountControl(BaseResource):
+    @swag_from(ADMIN_ACCOUNT_CONTROL_POST)
+    @json_required
+    @admin_only
+    def post(self):
+        """
+        새로운 관리자 계정 생성
+        """
+        id = request.json['id']
+        pw = request.json['pw']
+        name = request.json['name']
+
+        student = StudentModel.objects(id=id).first()
+        admin = AdminModel.objects(id=id).first()
+        if any((student, admin)):
+            return Response('', 204)
+
+        # --- Create new admin account
+
+        hashed_pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
+        # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
+
+        AdminModel(id=id, pw=hashed_pw, name=name).save()
+
+        return Response('', 201)
+
+    @swag_from(ADMIN_ACCOUNT_CONTROL_DELETE)
     @json_required
     @admin_only
     def delete(self):

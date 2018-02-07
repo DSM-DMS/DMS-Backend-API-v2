@@ -94,10 +94,9 @@ class Router(object):
             self.init_app(app)
 
     def init_app(self, app):
-        from app.views.admin.account import account_control, auth, signup
+        from app.views.admin.account import account_control, auth
         app.register_blueprint(account_control.api.blueprint)
         app.register_blueprint(auth.api.blueprint)
-        app.register_blueprint(signup.api.blueprint)
 
         from app.views.admin.apply import extension, goingout, stay
         app.register_blueprint(extension.api.blueprint)
