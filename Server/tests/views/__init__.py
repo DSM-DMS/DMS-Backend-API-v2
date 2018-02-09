@@ -39,28 +39,31 @@ class TCBase(TC):
             number=1111
         ).save()
 
-    def _get_access_token(self, auth_rul_rule='/auth'):
+    def _auth(self, auth_url_rule):
         res = self.client.post(
-            auth_rul_rule,
-            data=json.dumps({'id': self.student_id if auth_rul_rule == '/auth' else self.admin_id, 'pw': self.pw}),
+            auth_url_rule,
+            data=json.dumps({'id': self.student_id if auth_url_rule == '/auth' else self.admin_id, 'pw': self.pw}),
             content_type='application/json'
         )
 
-        return 'JWT ' + json.loads(res.data.decode())['accessToken']
+        return json.loads(res.data.decode())
 
-    def _get_refresh_token(self, refresh_rul_rule='/refresh'):
-        res = self.client.post(
-            refresh_rul_rule,
-            data=json.dumps({'id': self.student_id if refresh_rul_rule == '/refresh' else self.admin_id, 'pw': self.pw}),
-            content_type='application/json'
-        )
+    def _get_access_token(self, auth_url_rule='/auth'):
+        resp = self._auth(auth_url_rule)
 
-        return 'JWT ' + json.loads(res.data.decode())['refreshToken']
+        return 'JWT ' + resp['accessToken']
+
+    def _get_refresh_token(self, auth_url_rule='/auth'):
+        resp = self._auth(auth_url_rule)
+
+        return 'JWT ' + resp['refreshToken']
 
     def setUp(self):
         self._create_fake_accounts()
         self.admin_access_token = self._get_access_token('/admin/auth')
         self.student_access_token = self._get_access_token()
+        self.admin_refresh_token = self._get_refresh_token('/admin/auth')
+        self.student_refresh_token = self._get_refresh_token()
 
     def tearDown(self):
         AdminModel.objects.delete()
