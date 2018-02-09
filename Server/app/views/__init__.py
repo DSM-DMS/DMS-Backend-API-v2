@@ -139,6 +139,9 @@ class Router(object):
         from app.views.student.survey import survey
         app.register_blueprint(survey.api.blueprint)
 
+        from app.views.mixed.account import refresh
+        app.register_blueprint(refresh.api.blueprint)
+
         from app.views.mixed.post import faq, notice, preview, rule
         app.register_blueprint(faq.api.blueprint)
         app.register_blueprint(notice.api.blueprint)
