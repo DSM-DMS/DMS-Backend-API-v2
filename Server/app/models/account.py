@@ -130,7 +130,8 @@ class RefreshTokenModel(Document):
     )
     token_owner = ReferenceField(
         document_type=AccountBase,
-        required=True
+        required=True,
+        reverse_delete_rule=CASCADE
     )
     pw_snapshot = StringField(
         required=True
