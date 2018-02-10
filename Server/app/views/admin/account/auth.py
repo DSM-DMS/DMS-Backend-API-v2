@@ -4,7 +4,6 @@ from uuid import uuid4
 
 from flask import Blueprint, current_app
 from flask_jwt_extended import create_access_token, create_refresh_token
-from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort, request
 from flasgger import swag_from
 
@@ -53,24 +52,4 @@ class Auth(BaseResource):
         return {
             'accessToken': create_access_token(id),
             'refreshToken': create_refresh_token(str(refresh_token))
-        }, 200
-
-
-@api.resource('/refresh')
-class Refresh(BaseResource):
-    @swag_from(REFRESH_POST)
-    @jwt_refresh_token_required
-    def post(self):
-        """
-        새로운 Access Token 획득
-        """
-        token = RefreshTokenModel.objects(token=get_jwt_identity()).first()
-
-        # if not token or token.token_owner.pw != token.pw_snapshot:
-        #     # Invalid token or the token issuing password is different from the current password
-        #     # Returns status code 205 : Reset Content
-        #     return Response('', 205)
-
-        return {
-            'accessToken': create_access_token(token.token_owner.id)
         }, 200
