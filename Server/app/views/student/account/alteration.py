@@ -16,7 +16,7 @@ api = Api(Blueprint('student-account-alteration-api', __name__))
 @api.resource('/change/pw')
 class ChangePW(BaseResource):
     @swag_from(CHANGE_PW_POST)
-    @json_required
+    @json_required('currentPw', 'newPw')
     @student_only
     def post(self):
         """
@@ -56,7 +56,7 @@ class ChangePW(BaseResource):
 @api.resource('/change/number')
 class ChangeNumber(BaseResource):
     @swag_from(CHANGE_NUMBER_POST)
-    @json_required
+    @json_required('newNumber')
     @student_only
     def post(self):
         """

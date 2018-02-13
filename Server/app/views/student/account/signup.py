@@ -15,7 +15,7 @@ api = Api(Blueprint('student-signup-api', __name__))
 @api.resource('/verify/id')
 class IDVerification(BaseResource):
     @swag_from(ID_VERIFICATION_POST)
-    @json_required
+    @json_required('id')
     def post(self):
         """
         ID 중복체크
@@ -34,7 +34,7 @@ class IDVerification(BaseResource):
 @api.resource('/verify/uuid')
 class UUIDVerification(BaseResource):
     @swag_from(UUID_VERIFICATION_POST)
-    @json_required
+    @json_required('uuid')
     def post(self):
         """
         UUID에 대한 가입 가능 여부 검사
@@ -52,7 +52,7 @@ class UUIDVerification(BaseResource):
 @api.resource('/signup')
 class Signup(BaseResource):
     @swag_from(SIGNUP_POST)
-    @json_required
+    @json_required('uuid', 'id', 'pw')
     def post(self):
         """
         회원가입

@@ -15,7 +15,7 @@ api.prefix = '/admin'
 @api.resource('/rule')
 class RuleManaging(BaseResource):
     @swag_from(RULE_MANAGING_POST)
-    @json_required
+    @json_required('title', 'content')
     @admin_only
     def post(self):
         """
@@ -32,7 +32,7 @@ class RuleManaging(BaseResource):
         }, 201)
 
     @swag_from(RULE_MANAGING_PATCH)
-    @json_required
+    @json_required('id', 'title', 'content')
     @admin_only
     def patch(self):
         """
@@ -54,7 +54,7 @@ class RuleManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(RULE_MANAGING_DELETE)
-    @json_required
+    @json_required('id')
     @admin_only
     def delete(self):
         """

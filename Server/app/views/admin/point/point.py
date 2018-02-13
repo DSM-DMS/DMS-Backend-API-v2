@@ -35,7 +35,7 @@ class PointManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(POINT_MANAGING_POST)
-    @json_required
+    @json_required('studentId', 'ruleId', 'point')
     @admin_only
     def post(self):
         """
@@ -73,7 +73,7 @@ class PointManaging(BaseResource):
         return Response('', 201)
 
     @swag_from(POINT_MANAGING_DELETE)
-    @json_required
+    @json_required('studentId', 'historyId')
     @admin_only
     def delete(self):
         """

@@ -13,7 +13,7 @@ api.prefix = '/admin/preview'
 @api.resource('/faq')
 class FAQPreviewManaging(BaseResource):
     @swag_from(FAQ_PREVIEW_MANAGING_POST)
-    @json_required
+    @json_required('id')
     @admin_only
     def post(self):
         """
@@ -40,7 +40,7 @@ class FAQPreviewManaging(BaseResource):
 @api.resource('/notice')
 class NoticePreviewManaging(BaseResource):
     @swag_from(NOTICE_PREVIEW_MANAGING_POST)
-    @json_required
+    @json_required('id')
     @admin_only
     def post(self):
         """
@@ -67,7 +67,7 @@ class NoticePreviewManaging(BaseResource):
 @api.resource('/rule')
 class RulePreviewManaging(BaseResource):
     @swag_from(RULE_PREVIEW_MANAGING_POST)
-    @json_required
+    @json_required('id')
     @admin_only
     def post(self):
         """

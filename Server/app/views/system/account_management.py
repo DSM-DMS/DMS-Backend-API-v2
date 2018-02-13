@@ -18,7 +18,7 @@ api.prefix = '/system'
 
 @api.resource('/account/admin')
 class AdminAccount(BaseResource):
-    @json_required
+    @json_required('id', 'pw')
     @system_only
     def post(self):
         """
@@ -38,7 +38,7 @@ class AdminAccount(BaseResource):
 
         return Response('', 201)
 
-    @json_required
+    @json_required('id')
     @system_only
     def delete(self):
         """
@@ -57,7 +57,7 @@ class AdminAccount(BaseResource):
 
 @api.resource('/uuid-generate/new')
 class NewUUIDGeneration(BaseResource):
-    @json_required
+    @json_required()
     @system_only
     def post(self):
         """

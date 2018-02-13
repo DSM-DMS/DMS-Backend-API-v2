@@ -13,7 +13,6 @@ api.prefix = '/admin/managing'
 @api.resource('/rule')
 class PointRuleManaging(BaseResource):
     @swag_from(POINT_RULE_MANAGING_GET)
-    @json_required
     @admin_only
     def get(self):
         """
@@ -29,7 +28,7 @@ class PointRuleManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(POINT_RULE_MANAGING_POST)
-    @json_required
+    @json_required('name', 'minPoint', 'maxPoint')
     @admin_only
     def post(self):
         """
@@ -50,7 +49,7 @@ class PointRuleManaging(BaseResource):
         }, 201
 
     @swag_from(POINT_RULE_MANAGING_PATCH)
-    @json_required
+    @json_required('ruleId', 'name', 'minPoint', 'maxPoint')
     @admin_only
     def patch(self):
         """
@@ -77,7 +76,7 @@ class PointRuleManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(POINT_RULE_MANAGING_DELETE)
-    @json_required
+    @json_required('ruleId')
     @admin_only
     def delete(self):
         """

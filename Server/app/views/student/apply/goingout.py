@@ -27,7 +27,7 @@ class Goingout(BaseResource):
         }, 200)
 
     @swag_from(GOINGOUT_POST)
-    @json_required
+    @json_required('sat', 'sun')
     @student_only
     def post(self):
         """

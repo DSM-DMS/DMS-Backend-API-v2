@@ -31,7 +31,7 @@ class Extension11(BaseResource):
         }, 200) if student.extension_apply_11 else ('', 204)
 
     @swag_from(EXTENSION_POST)
-    @json_required
+    @json_required('classNum', 'seatNum')
     @student_only
     def post(self):
         """
@@ -81,7 +81,7 @@ class Extension12(BaseResource):
         }, 200) if student.extension_apply_12 else ('', 204)
 
     @swag_from(EXTENSION_POST)
-    @json_required
+    @json_required('classNum', 'seatNum')
     @student_only
     def post(self):
         """

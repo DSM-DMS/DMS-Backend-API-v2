@@ -24,7 +24,7 @@ class Extension11(BaseResource):
 
 @api.resource('/apply/extension/11/<int:number>')
 class Extension11EachStudent(BaseResource):
-    @json_required
+    @json_required('classNum', 'seatNum')
     @system_only
     def post(self, number):
         """
@@ -36,7 +36,7 @@ class Extension11EachStudent(BaseResource):
             return Response('', 204)
 
         class_ = request.json['classNum']
-        seat = request.json['seat']
+        seat = request.json['seatNum']
 
         student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat))
 
@@ -72,7 +72,7 @@ class Extension12(BaseResource):
 
 @api.resource('/apply/extension/12/<int:number>')
 class Extension12EachStudent(BaseResource):
-    @json_required
+    @json_required('classNum', 'seatNum')
     @system_only
     def post(self, number):
         """
@@ -84,7 +84,7 @@ class Extension12EachStudent(BaseResource):
             return Response('', 204)
 
         class_ = request.json['classNum']
-        seat = request.json['seat']
+        seat = request.json['seatNum']
 
         student.update(extension_apply_12=ExtensionApplyModel(class_=class_, seat=seat))
 
@@ -120,7 +120,7 @@ class Goingout(BaseResource):
 
 @api.resource('/apply/goingout/<int:number>')
 class GoingoutEachStudent(BaseResource):
-    @json_required
+    @json_required('sat', 'sun')
     @system_only
     def post(self, number):
         """
@@ -155,7 +155,7 @@ class GoingoutEachStudent(BaseResource):
 
 @api.resource('/apply/stay/<int:number>')
 class Stay(BaseResource):
-    @json_required
+    @json_required('value')
     @system_only
     def post(self, number):
         """

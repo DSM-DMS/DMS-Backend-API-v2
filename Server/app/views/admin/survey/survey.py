@@ -32,7 +32,7 @@ class SurveyManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(SURVEY_MANAGING_POST)
-    @json_required
+    @json_required('title', 'description', 'startDate', 'endDate', 'target')
     @admin_only
     def post(self):
         """
@@ -57,7 +57,7 @@ class SurveyManaging(BaseResource):
         }, 201
 
     @swag_from(SURVEY_MANAGING_DELETE)
-    @json_required
+    @json_required('surveyId')
     @admin_only
     def delete(self):
         """
@@ -102,7 +102,7 @@ class QuestionManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(QUESTION_MANAGING_POST)
-    @json_required
+    @json_required('surveyId', 'questions')
     @admin_only
     def post(self):
         """
