@@ -66,6 +66,9 @@ def signed_account_only(fn):
 
 def json_required(*required_keys):
     def decorator(fn):
+        if fn.__name__ == 'get':
+            print('[WARN] JSON with GET method? on "{}()"'.format(fn.__qualname__))
+
         @wraps(fn)
         def wrapper(*args, **kwargs):
             if not request.is_json:
