@@ -208,6 +208,7 @@ class TestAccountControl(TCBase):
 
         res = self.client.delete(
             '/admin/account-control/admin',
+            data=json.dumps({'id': 'new'}),
             content_type='application/json',
             headers={'Authorization': self.student_access_token}
         )

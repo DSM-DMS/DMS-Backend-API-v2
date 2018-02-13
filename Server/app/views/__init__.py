@@ -64,15 +64,20 @@ def signed_account_only(fn):
     return wrapper
 
 
-def json_required(fn):
-    @wraps(fn)
-    def wrapper(*args, **kwargs):
-        if not request.is_json:
-            abort(400)
+def json_required(*required_keys):
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            if not request.is_json:
+                abort(406)
 
-        return fn(*args, **kwargs)
+            for required_key in required_keys:
+                if required_key not in request.json:
+                    abort(400)
 
-    return wrapper
+            return fn(*args, **kwargs)
+        return wrapper
+    return decorator
 
 
 class BaseResource(Resource):

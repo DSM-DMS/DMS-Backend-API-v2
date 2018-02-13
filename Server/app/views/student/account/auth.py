@@ -17,7 +17,7 @@ api = Api(Blueprint('student-auth-api', __name__))
 @api.resource('/auth')
 class Auth(BaseResource):
     @swag_from(AUTH_POST)
-    @json_required
+    @json_required('id', 'pw')
     def post(self):
         """
         학생 로그인
