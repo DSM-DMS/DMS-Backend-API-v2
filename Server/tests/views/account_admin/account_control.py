@@ -37,8 +37,8 @@ class TestAccountControl(TCBase):
         self.assertEqual(res.status_code, 201)
 
         response_data = json.loads(res.data.decode())
-        self.assertTrue('uuid' in response_data)
-        self.assertTrue(len(response_data['uuid']) == 4)
+        self.assertIn('uuid', response_data)
+        self.assertEqual(len(response_data['uuid']), 4)
         # -- Test --
 
         # -- Exception Test --
@@ -77,8 +77,8 @@ class TestAccountControl(TCBase):
         self.assertEqual(res.status_code, 200)
 
         response_data = json.loads(res.data.decode())
-        self.assertTrue('uuid' in response_data)
-        self.assertTrue(len(response_data['uuid']) == 4)
+        self.assertIn('uuid', response_data)
+        self.assertEqual(len(response_data['uuid']), 4)
         # -- Test --
 
         # -- Exception Test --
