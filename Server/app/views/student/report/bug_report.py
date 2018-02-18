@@ -14,7 +14,7 @@ api = Api(Blueprint('student-bug-report-api', __name__))
 @api.resource('/report/bug')
 class BugReport(BaseResource):
     @swag_from(BUG_REPORT_POST)
-    @json_required
+    @json_required('title', 'content')
     @student_only
     def post(self):
         """

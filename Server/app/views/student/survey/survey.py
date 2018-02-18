@@ -75,7 +75,7 @@ class Question(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(QUESTION_POST)
-    @json_required
+    @json_required('questionId', 'answer')
     @student_only
     def post(self):
         """

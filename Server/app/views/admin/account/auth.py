@@ -18,7 +18,7 @@ api.prefix = '/admin'
 @api.resource('/auth')
 class Auth(BaseResource):
     @swag_from(AUTH_POST)
-    @json_required
+    @json_required('id', 'pw')
     def post(self):
         """
         관리자 로그인

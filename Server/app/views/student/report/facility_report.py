@@ -14,7 +14,7 @@ api = Api(Blueprint('student-facility-report-api', __name__))
 @api.resource('/report/facility')
 class FacilityReport(BaseResource):
     @swag_from(FACILITY_REPORT_POST)
-    @json_required
+    @json_required('title', 'content', 'room')
     @student_only
     def post(self):
         """

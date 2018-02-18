@@ -13,7 +13,6 @@ api.prefix = '/admin/managing'
 @api.resource('/student')
 class StudentManaging(BaseResource):
     @swag_from(STUDENT_MANAGING_GET)
-    @json_required
     @admin_only
     def get(self):
         """

@@ -28,7 +28,7 @@ class Stay(BaseResource):
         }, 200)
 
     @swag_from(STAY_POST)
-    @json_required
+    @json_required('value')
     @student_only
     def post(self):
         """

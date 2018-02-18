@@ -17,7 +17,7 @@ api.prefix = '/admin'
 @api.resource('/account-control/student')
 class StudentAccountControl(BaseResource):
     @swag_from(STUDENT_ACCOUNT_CONTROL_DELETE)
-    @json_required
+    @json_required('number')
     @admin_only
     def delete(self):
         """
@@ -58,7 +58,7 @@ class StudentAccountControl(BaseResource):
 @api.resource('/account-control/admin')
 class AdminAccountControl(BaseResource):
     @swag_from(ADMIN_ACCOUNT_CONTROL_POST)
-    @json_required
+    @json_required('id', 'pw', 'name')
     @admin_only
     def post(self):
         """
@@ -88,7 +88,7 @@ class AdminAccountControl(BaseResource):
         return Response('', 201)
 
     @swag_from(ADMIN_ACCOUNT_CONTROL_DELETE)
-    @json_required
+    @json_required('id')
     @admin_only
     def delete(self):
         """
