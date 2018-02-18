@@ -29,15 +29,20 @@ class TestAccountControl(TCBase):
         # -- Before Test --
 
         # -- Test --
-        # res = self.client.post(
-        #     '/admin/auth',
-        #     data=json.dumps({'id': self.admin_id, 'pw': self.pw}),
-        #     content_type='application/json',
-        #     headers={''}
-        # )
+        res = self.json_request(self.client.post, '/admin/auth', {'id': self.admin_id, 'pw': self.pw}, self.admin_access_token)
+        self.assertEqual(res.status_code, 200)
+
+        response_data = json.loads(res.data.decode())
+        self.assertIn('accessToken', response_data)
+        self.assertIn('refreshToken', response_data)
         # -- Test --
 
         # -- Exception Test --
+        res = self.json_request(self.client.post, '/admin/auth', {'id': '1', 'pw': self.pw}, self.admin_access_token)
+        self.assertEqual(res.status_code, 401)
+
+        res = self.json_request(self.client.post, '/admin/auth', {'id': self.admin_id, 'pw': '1'}, self.admin_access_token)
+        self.assertEqual(res.status_code, 401)
         # -- Exception Test --
 
     def testB_refresh(self):
