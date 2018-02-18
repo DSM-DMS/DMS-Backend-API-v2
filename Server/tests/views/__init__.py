@@ -1,7 +1,7 @@
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
-import json
+import ujson
 
 from tests.views import account_admin, account_student
 from app import app
@@ -42,11 +42,11 @@ class TCBase(TC):
     def _auth(self, auth_url_rule):
         res = self.client.post(
             auth_url_rule,
-            data=json.dumps({'id': self.student_id if auth_url_rule == '/auth' else self.admin_id, 'pw': self.pw}),
+            data=ujson.dumps({'id': self.student_id if auth_url_rule == '/auth' else self.admin_id, 'pw': self.pw}),
             content_type='application/json'
         )
 
-        return json.loads(res.data.decode())
+        return ujson.loads(res.data.decode())
 
     def _get_access_token(self, auth_url_rule='/auth'):
         resp = self._auth(auth_url_rule)
@@ -69,3 +69,21 @@ class TCBase(TC):
         AdminModel.objects.delete()
         StudentModel.objects.delete()
         # 마이그레이션 해야함
+
+    def json_request(self, method, target_url_rule, data, token):
+        """
+        Helper for json request
+
+        :type method: func
+        :type target_url_rule: str
+        :type data: dict or list
+        :type token: str
+
+        :return: response
+        """
+        return method(
+            target_url_rule,
+            data=ujson.dumps(data),
+            content_type='application/json',
+            headers={'Authorization': token}
+        )

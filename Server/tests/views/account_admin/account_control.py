@@ -33,12 +33,7 @@ class TestAccountControl(TCBase):
         # -- Before Test --
 
         # -- Test --
-        res = self.client.delete(
-            '/admin/account-control/student',
-            data=json.dumps({'number': 1111}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.delete, '/admin/account-control/student', {'number': 1111}, self.admin_access_token)
         self.assertEqual(res.status_code, 201)
 
         response_data = json.loads(res.data.decode())
@@ -47,20 +42,10 @@ class TestAccountControl(TCBase):
         # -- Test --
 
         # -- Exception Test --
-        res = self.client.delete(
-            '/admin/account-control/student',
-            data=json.dumps({'number': 0000}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.delete, '/admin/account-control/student', {'number': 1}, self.admin_access_token)
         self.assertEqual(res.status_code, 204)
 
-        res = self.client.delete(
-            '/admin/account-control/student',
-            data=json.dumps({'number': 0000}),
-            content_type='application/json',
-            headers={'Authorization': self.student_access_token}
-        )
+        res = self.json_request(self.client.delete, '/admin/account-control/student', {'number': 1111}, self.student_access_token)
         self.assertEqual(res.status_code, 403)
         # -- Exception Test --
 
@@ -83,22 +68,12 @@ class TestAccountControl(TCBase):
         Clear SignupWaitingModel
         """
         # -- Before Test --
-        res = self.client.delete(
-            '/admin/account-control/student',
-            data=json.dumps({'number': 1111}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.delete, '/admin/account-control/student', {'number': 1111}, self.admin_access_token)
         self.assertEqual(res.status_code, 201)
         # -- Before Test --
 
         # -- Test --
-        res = self.client.delete(
-            '/admin/account-control/student',
-            data=json.dumps({'number': 1111}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.delete, '/admin/account-control/student', {'number': 1111}, self.admin_access_token)
         self.assertEqual(res.status_code, 200)
 
         response_data = json.loads(res.data.decode())
@@ -131,30 +106,15 @@ class TestAccountControl(TCBase):
         # -- Before Test --
 
         # -- Test --
-        res = self.client.post(
-            '/admin/account-control/admin',
-            data=json.dumps({'id': 'new', 'pw': 'new', 'name': 'new'}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.post, '/admin/account-control/admin', {'id': 'new', 'pw': 'new', 'name': 'new'}, self.admin_access_token)
         self.assertEqual(res.status_code, 201)
         # -- Test --
 
         # -- Exception Test --
-        res = self.client.post(
-            '/admin/account-control/admin',
-            data=json.dumps({'id': 'fake_admin', 'pw': 'new', 'name': 'new'}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.post, '/admin/account-control/admin', {'id': 'new', 'pw': 'new', 'name': 'new'}, self.admin_access_token)
         self.assertEqual(res.status_code, 204)
 
-        res = self.client.post(
-            '/admin/account-control/admin',
-            data=json.dumps({'id': 'new', 'pw': 'new', 'name': 'new'}),
-            content_type='application/json',
-            headers={'Authorization': self.student_access_token}
-        )
+        res = self.json_request(self.client.post, '/admin/account-control/admin', {'id': 'new', 'pw': 'new', 'name': 'new'}, self.student_access_token)
         self.assertEqual(res.status_code, 403)
         # -- Exception Test --
 
@@ -178,39 +138,19 @@ class TestAccountControl(TCBase):
         * Test passes : status code 403
         """
         # -- Before Test --
-        res = self.client.post(
-            '/admin/account-control/admin',
-            data=json.dumps({'id': 'new', 'pw': 'new', 'name': 'new'}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.post, '/admin/account-control/admin', {'id': 'new', 'pw': 'new', 'name': 'new'}, self.admin_access_token)
         self.assertEqual(res.status_code, 201)
         # -- Before Test --
 
         # -- Test --
-        res = self.client.delete(
-            '/admin/account-control/admin',
-            data=json.dumps({'id': 'new'}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.delete, '/admin/account-control/admin', {'id': 'new'}, self.admin_access_token)
         self.assertEqual(res.status_code, 200)
         # -- Test --
 
         # -- Exception Test --
-        res = self.client.delete(
-            '/admin/account-control/admin',
-            data=json.dumps({'id': 'new'}),
-            content_type='application/json',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.delete, '/admin/account-control/admin', {'id': 'new'}, self.admin_access_token)
         self.assertEqual(res.status_code, 204)
 
-        res = self.client.delete(
-            '/admin/account-control/admin',
-            data=json.dumps({'id': 'new'}),
-            content_type='application/json',
-            headers={'Authorization': self.student_access_token}
-        )
+        res = self.json_request(self.client.delete, '/admin/account-control/admin', {'id': 'new'}, self.student_access_token)
         self.assertEqual(res.status_code, 403)
         # -- Exception Test --

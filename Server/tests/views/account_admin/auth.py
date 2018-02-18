@@ -29,6 +29,12 @@ class TestAccountControl(TCBase):
         # -- Before Test --
 
         # -- Test --
+        # res = self.client.post(
+        #     '/admin/auth',
+        #     data=json.dumps({'id': self.admin_id, 'pw': self.pw}),
+        #     content_type='application/json',
+        #     headers={''}
+        # )
         # -- Test --
 
         # -- Exception Test --
