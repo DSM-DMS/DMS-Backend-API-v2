@@ -64,12 +64,14 @@ class TestAccountControl(TCBase):
         # -- Before Test --
 
         # -- Test --
+        res = self.json_request(self.client.post, '/refresh', {}, self.admin_refresh_token)
+        self.assertEqual(res.status_code, 200)
+
+        response_data = json.loads(res.data.decode())
+        self.assertIn('accessToken', response_data)
         # -- Test --
 
         # -- Exception Test --
-        res = self.client.post(
-            '/refresh',
-            headers={'Authorization': self.admin_access_token}
-        )
+        res = self.json_request(self.client.post, 'refresh', {}, self.admin_access_token)
         self.assertEqual(res.status_code, 422)
         # -- Exception Test --
