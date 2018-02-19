@@ -5,13 +5,13 @@ from app.models.account import SignupWaitingModel
 from tests.views import TCBase
 
 
-class TestAccountControl(TCBase):
+class Test(TCBase):
     def tearDown(self):
         SignupWaitingModel.objects.delete()
 
         TCBase.tearDown(self)
 
-    def testA_deleteStudentAccount(self):
+    def test_delete_student_account(self):
         """
         TC about existing student account deletion
 
@@ -26,7 +26,7 @@ class TestAccountControl(TCBase):
         Non-existing student number
         * Test passes : status code 204
 
-        Forbidden with student access token
+        Forbidden with student's access token
         * Test passes : status code 403
         """
         # -- Before Test --
@@ -49,7 +49,7 @@ class TestAccountControl(TCBase):
         self.assertEqual(res.status_code, 403)
         # -- Exception Test --
 
-    def testB_deleteAlreadySignupWaitingStudent(self):
+    def test_delete_already_signup_waiting_student(self):
         """
         TC about already signup waiting student account deletion
 
@@ -84,7 +84,7 @@ class TestAccountControl(TCBase):
         # -- Exception Test --
         # -- Exception Test --
 
-    def testC_createNewAdminAccount(self):
+    def test_create_new_admin_account(self):
         """
         TC about new admin account creation
 
@@ -99,7 +99,7 @@ class TestAccountControl(TCBase):
         Already existing ID
         * Test passes : status code 204
 
-        Forbidden with student access token
+        Forbidden with student's access token
         * Test passes : status code 403
         """
         # -- Before Test --
@@ -118,7 +118,7 @@ class TestAccountControl(TCBase):
         self.assertEqual(res.status_code, 403)
         # -- Exception Test --
 
-    def testD_deleteAdminAccount(self):
+    def test_delete_admin_account(self):
         """
         TC about new admin account deletion
 
@@ -134,7 +134,7 @@ class TestAccountControl(TCBase):
         Non-existing ID
         * Test passes : status code 204
 
-        Forbidden with student access token
+        Forbidden with student's access token
         * Test passes : status code 403
         """
         # -- Before Test --

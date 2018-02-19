@@ -3,11 +3,8 @@ import json
 from tests.views import TCBase
 
 
-class TestAccountControl(TCBase):
-    def tearDown(self):
-        TCBase.tearDown(self)
-
-    def testA_auth(self):
+class Test(TCBase):
+    def test_auth(self):
         """
         TC about authentication
 
@@ -15,7 +12,7 @@ class TestAccountControl(TCBase):
         None
 
         - Test
-        Auth with TCBase.setUp() generated ID, PW
+        Auth with TCBase.setUp() generated admin's ID, PW
         * Test passes : status code 200 with 'accessToken', 'refreshToken' in response
 
         - Exception Test
@@ -45,7 +42,7 @@ class TestAccountControl(TCBase):
         self.assertEqual(res.status_code, 401)
         # -- Exception Test --
 
-    def testB_refresh(self):
+    def test_refresh(self):
         """
         TC about refresh(take new access token)
 
@@ -53,11 +50,11 @@ class TestAccountControl(TCBase):
         None
 
         - Test
-        Refresh with TCBase.setUp() generated refreshToken
+        Refresh with admin's refreshToken
         * Test passes : status code 200 with 'accessToken' in response
 
         - Exception Test
-        Unprocessable entity with access token
+        Unprocessable entity with admin's access token
         * Test passes : status code 422
         """
         # -- Before Test --
