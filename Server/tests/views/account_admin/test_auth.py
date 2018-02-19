@@ -26,7 +26,7 @@ class Test(TCBase):
         # -- Before Test --
 
         # -- Test --
-        res = self.json_request(self.client.post, '/admin/auth', {'id': self.admin_id, 'pw': self.pw}, self.admin_access_token)
+        res = self.admin_json_request(self.client.post, '/admin/auth', {'id': self.admin_id, 'pw': self.pw})
         self.assertEqual(res.status_code, 200)
 
         response_data = json.loads(res.data.decode())
@@ -35,10 +35,10 @@ class Test(TCBase):
         # -- Test --
 
         # -- Exception Test --
-        res = self.json_request(self.client.post, '/admin/auth', {'id': '1', 'pw': self.pw}, self.admin_access_token)
+        res = self.admin_json_request(self.client.post, '/admin/auth', {'id': '1', 'pw': self.pw})
         self.assertEqual(res.status_code, 401)
 
-        res = self.json_request(self.client.post, '/admin/auth', {'id': self.admin_id, 'pw': '1'}, self.admin_access_token)
+        res = self.admin_json_request(self.client.post, '/admin/auth', {'id': self.admin_id, 'pw': '1'})
         self.assertEqual(res.status_code, 401)
         # -- Exception Test --
 
@@ -61,7 +61,7 @@ class Test(TCBase):
         # -- Before Test --
 
         # -- Test --
-        res = self.json_request(self.client.post, '/refresh', {}, self.admin_refresh_token)
+        res = self.admin_json_request(self.client.post, '/refresh', {})
         self.assertEqual(res.status_code, 200)
 
         response_data = json.loads(res.data.decode())
@@ -69,6 +69,6 @@ class Test(TCBase):
         # -- Test --
 
         # -- Exception Test --
-        res = self.json_request(self.client.post, 'refresh', {}, self.admin_access_token)
+        res = self.admin_json_request(self.client.post, 'refresh', {})
         self.assertEqual(res.status_code, 422)
         # -- Exception Test --
