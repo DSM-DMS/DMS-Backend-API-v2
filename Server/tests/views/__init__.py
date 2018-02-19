@@ -87,3 +87,27 @@ class TCBase(TC):
             content_type='application/json',
             headers={'Authorization': token}
         )
+
+    def admin_json_request(self, method, target_url_rule, data):
+        """
+        Helper for json request with admin's access token
+
+        :type method: func
+        :type target_url_rule: str
+        :type data: dict or list
+
+        :return: response
+        """
+        return self.json_request(method, target_url_rule, data, self.admin_access_token)
+
+    def student_json_request(self, method, target_url_rule, data):
+        """
+        Helper for json request with admin's access token
+
+        :type method: func
+        :type target_url_rule: str
+        :type data: dict or list
+
+        :return: response
+        """
+        return self.json_request(method, target_url_rule, data, self.student_access_token)
