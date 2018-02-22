@@ -3,7 +3,7 @@ from functools import wraps
 import ujson
 import time
 
-from flask import Response, abort, request
+from flask import Response, abort, g, request
 from flask_restful import Resource
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
@@ -18,6 +18,8 @@ def admin_only(fn):
         if not admin:
             abort(403)
 
+        g.admin = admin
+        
         return fn(*args, **kwargs)
 
     return wrapper
@@ -31,6 +33,8 @@ def student_only(fn):
         if not student:
             abort(403)
 
+        g.student = student
+
         return fn(*args, **kwargs)
 
     return wrapper
@@ -43,6 +47,8 @@ def system_only(fn):
         system = SystemModel.objects(id=get_jwt_identity()).first()
         if not system:
             abort(403)
+
+        g.system = system
 
         return fn(*args, **kwargs)
 
@@ -58,6 +64,9 @@ def signed_account_only(fn):
 
         if not any((admin, student)):
             abort(403)
+
+        g.admin = admin
+        g.student = student
 
         return fn(*args, **kwargs)
 
