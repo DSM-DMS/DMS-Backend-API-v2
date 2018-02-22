@@ -74,6 +74,12 @@ def signed_account_only(fn):
 
 
 def json_required(*required_keys):
+    """
+    View decorator for JSON validation.
+    - If content-type is not application/json : returns status code 406
+    - If required_keys are not exist on request.json : returns status code 400
+    :type required_keys: str
+    """
     def decorator(fn):
         if fn.__name__ == 'get':
             print('[WARN] JSON with GET method? on "{}()"'.format(fn.__qualname__))
