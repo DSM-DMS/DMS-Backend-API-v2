@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.models import *
 from app.models.account import StudentModel
 
@@ -13,23 +11,38 @@ class SurveyModel(Document):
     }
 
     creation_time = DateTimeField(
-        required=True,
-        default=datetime.now()
+        required=True
     )
+
     title = StringField(
         required=True
     )
+
     description = StringField(
         required=True
     )
+
     start_date = DateTimeField(
         required=True
     )
     end_date = DateTimeField(
         required=True
     )
+
     target = ListField(
         IntField()
+    )
+
+    questions = ListField(
+        ReferenceField(
+            document_type=QuestionModel
+        )
+    )
+
+    answers = ListField(
+        ReferenceField(
+            document_type=AnswerModel
+        )
     )
 
 
@@ -39,14 +52,8 @@ class QuestionModel(Document):
     """
 
     meta = {
-        'collection': 'question'
+        'collection': 'survey_question'
     }
-
-    survey = ReferenceField(
-        document_type=SurveyModel,
-        required=True,
-        reverse_delete_rule=CASCADE
-    )
 
     title = StringField(
         required=True
@@ -63,18 +70,13 @@ class AnswerModel(Document):
     """
 
     meta = {
-        'collection': 'answer'
+        'collection': 'survey_answer'
     }
-
-    question = ReferenceField(
-        document_type=QuestionModel,
-        required=True,
-        reverse_delete_rule=CASCADE
-    )
 
     answer_student = ReferenceField(
         document_type=StudentModel,
-        required=True
+        required=True,
+        reverse_delete_rule=CASCADE
     )
     content = StringField(
         required=True

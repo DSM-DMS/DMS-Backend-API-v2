@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.models import *
 
 from app.models.apply import ExtensionApplyModel, GoingoutApplyModel, StayApplyModel
@@ -16,6 +14,7 @@ class SignupWaitingModel(Document):
 
     uuid = StringField(
         primary_key=True,
+        min_length=4,
         max_length=4
     )
     name = StringField(
@@ -38,12 +37,11 @@ class AccountBase(Document):
     }
 
     signup_time = DateTimeField(
-        required=True,
-        default=datetime.now()
+        required=True
     )
 
     id = StringField(
-        primary_key=True,
+        primary_key=True
     )
     pw = StringField(
         required=True
@@ -90,12 +88,18 @@ class StudentModel(AccountBase):
         default=0
     )
 
-    penalty_training_status = IntField(
-        default=0
+    point_histories = ListField(
+        ReferenceField(
+            document_type=PointHistoryModel,
+            reverse_delete_rule=CASCADE
+        )
     )
 
-    point_histories = EmbeddedDocumentListField(
-        document_type=PointHistoryModel
+    penalty_training_status = BooleanField(
+        default=False
+    )
+    penalty_level = IntField(
+        default=0
     )
 
 

@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.models import *
 
 
@@ -13,15 +11,13 @@ class ReportBase(Document):
     }
 
     report_time = DateTimeField(
-        required=True,
-        default=datetime.now()
+        required=True
     )
+
     author = StringField(
         required=True
     )
-    title = StringField(
-        required=True
-    )
+
     content = StringField(
         required=True
     )
@@ -30,10 +26,21 @@ class ReportBase(Document):
 class BugReportModel(ReportBase):
     """
     Bug report document
+    
+    platform
+    1 : Web
+    2 : Android
+    3 : IOS
     """
     meta = {
-        'collection': 'bug_report'
+        'collection': 'report_bug'
     }
+
+    platform = IntField(
+        required=True,
+        min_value=1,
+        max_value=3
+    )
 
 
 class FacilityReportModel(ReportBase):
@@ -41,7 +48,7 @@ class FacilityReportModel(ReportBase):
     Facility report document
     """
     meta = {
-        'collection': 'facility_report'
+        'collection': 'report_facility'
     }
 
     room = IntField(

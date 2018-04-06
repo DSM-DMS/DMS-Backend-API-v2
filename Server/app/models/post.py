@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.models import *
 
 
@@ -13,19 +11,21 @@ class PostBase(Document):
     }
 
     write_time = DateTimeField(
-        required=True,
-        default=datetime.now()
+        required=True
     )
+
     author = StringField(
         required=True,
         default='사감실'
     )
+
     title = StringField(
         required=True
     )
     content = StringField(
         required=True
     )
+
     pinned = BooleanField(
         required=True,
         default=False
@@ -34,17 +34,17 @@ class PostBase(Document):
 
 class FAQModel(PostBase):
     meta = {
-        'collection': 'faq'
+        'collection': 'post_faq'
     }
 
 
 class NoticeModel(PostBase):
     meta = {
-        'collection': 'notice'
+        'collection': 'post_notice'
     }
 
 
 class RuleModel(PostBase):
     meta = {
-        'collection': 'rule'
+        'collection': 'post_rule'
     }
